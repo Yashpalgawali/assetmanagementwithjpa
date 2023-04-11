@@ -56,4 +56,12 @@ public class DepartmentServImpl implements DepartmentService {
 		return deptrepo.updateDepartmentById(dept.getDept_name(), dept.getCompany().getComp_id(), dept.getDept_id());
 	}
 
+	@Override
+	public List<Department> getDepartmentByCompanyId(String cid) {
+		// TODO Auto-generated method stub
+		Long cmid = Long.valueOf(cid);
+		
+		return deptrepo.getAllDepartmentsByCompanyId(cmid);
+	}
+
 }

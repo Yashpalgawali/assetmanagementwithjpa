@@ -18,7 +18,6 @@
 <body>
 		
 	<div th:include="fragments/header.html :: header">
-	
 	</div>	
 		
 	<div class="container">
@@ -41,7 +40,8 @@
                        <th>Asset Type</th>
                        <th>Asset</th>
                        <th>Asset Number</th>
-<!--                        <th>Model Number</th> -->
+                       <th>Model Number</th>
+                       <th>Quantity</th>
                        <th>Edit</th>
                    </tr>
                </thead>
@@ -51,7 +51,8 @@
                        <td th:text="${comp.atype.type_name}"></td>
                        <td th:text="${comp.asset_name}"></td>
                        <td th:text="${comp.asset_number}"></td>
-<!--                        <td th:text="${comp.model_number}"></td> -->
+                       <td th:text="${comp.model_number}"></td>
+                       <td th:text="${comp.quantity}"></td>
                        <td><a th:href="@{/editasset/{id}(id=${comp.asset_id})}" class="btn btn-primary">Edit</a></td>
                    </tr>
                </tbody>

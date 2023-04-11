@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="#" rel="shortcut icon">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<link th:href="@{/css/main.css}" rel="stylesheet" />
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<title>Assign Asset(s) to Employee</title>
+
+<script>
+	
+	function getdeptbycompid(cid)
+	{
+		$('#dept_id').empty();
+		$('#dept_id').append("<option selected disabled>Please Select Department</option>");
+		
+		$.ajax({
+				url		:	'/getdeptbycompid/'+cid,
+				type	:	'GET',
+				dataType:	'JSON',
+				success : 	function(result)
+				{
+					$.each(result,function(i){
+						$('#department').append("<option value='"+result[i].dept_id+"'>"+result[i].dept_name+"</option>");	
+					});
+				}
+		});
+	}
+	
+	$(document).ready(function() {
+
+		$("#company").select2({
+			theme : 'classic',
+			width : 'resolve'
+
+		});
+		
+		$("#designation").select2({
+			theme : 'classic',
+			width : 'resolve'
+
+		});
+
+		$("#department").select2({
+			theme : 'classic',
+			width : 'resolve'
+		});
+
+		$("#type_id").select2({
+			
+			width : 'resolve',
+			placeholder : 'Please Select Asset Type',
+			allowClear : true
+
+		});
+
+		$("#multi_assets").select2({
+		
+			width 		: 'resolve',
+			placeholder : 'Please Select Asset(s) ',
+			allowClear 	:  true
+
+		});
+	})
+</script>
+
+</head>
+<body>
+
+	<div th:include="fragments/header.html :: header">
+	</div>
+
+	<div class="container">
+
+		<form th:action="@{/saveemployee}" method="post">
+			<div class="card">
+
+				<div class="card-header">
+					<h4>Assign Asset</h4>
+				</div>
+
+				<div class="card-body">
+
+					<div class="form-group">
+						<label for="emp_name">Employee Name</label>
+							<input class="form-control mb-3" type="text" id="emp_name" name="emp_name" placeholder="Enter Employee Name" required />
+					</div>
+
+					<div class="form-group">
+						<label for="emp_email">Email Name</label> 
+							<input class="form-control mb-3" type="email" id="emp_email" name="emp_email" placeholder="Enter Email address" required />
+					</div>
+					
+					<div class="form-group">
+						<label for="emp_contact">Contact</label> 
+							<input class="form-control mb-3" type="text" id="emp_contact" name="emp_contact" placeholder="Enter contact of the employee" required />
+					</div>
+					
+					<div class="form-group  ">
+						<label for="designation">Designation</label> 
+						<select class="form-control mb-3"  id="designation" name="designation" >
+						   <option selected disabled>Please Select Designation</option>
+							<th:block th:each="dlst : ${desiglist}">
+								<option th:value="${dlst.desig_id}" th:text="${dlst.desig_name}"></option>
+							</th:block>
+						</select>
+					</div>
+					
+					<div class="form-group ">
+						<label for="company">Company Name</label> 
+							<select class="form-control mb-3" id="company" name="company" onchange="getdeptbycompid(this.value)">
+								<option selected disabled>Please Select Company</option>
+									<th:block th:each="comp : ${clist}">
+										<option th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
+									</th:block>
+						</select>
+					</div>
+
+					<div class="form-group ">
+						<label for="department">Department</label> 
+							<select class="form-control mb-3" id="department" name="department">
+								<option selected disabled>Please Select Department</option>
+							</select>
+					</div>
+
+					
+					<div class="form-group">
+						<label for="multi_assets">Assets</label> 
+						<select class="form-control mb-3"  id="multi_assets" name="multi_assets" multiple="multiple">
+							<th:block th:each="alst : ${aslist}">
+							    <th:block th:if="${alst.quantity}>=1">
+									<option th:value="${alst.asset_id}" th:text="| (${alst.atype.type_name}) ${alst.asset_name} (${alst.model_number}) |"></option>
+								</th:block>
+								<th:block th:unless="${alst.quantity}>=1">
+									<option disabled th:value="${alst.asset_id}" th:text="| (${alst.atype.type_name}) ${alst.asset_name} (${alst.model_number}) |"></option>
+								</th:block>
+						  	</th:block>
+						</select>
+					</div>
+
+					<input type="submit" class="btn btn-primary" value="Submit" /> 
+					<input type="reset" class="btn btn-primary" value="RESET" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

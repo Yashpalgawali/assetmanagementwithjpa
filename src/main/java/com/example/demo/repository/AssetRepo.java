@@ -15,10 +15,10 @@ import com.example.demo.models.Assets;
 public interface AssetRepo extends JpaRepository<Assets, Long> {
 
 	
-	@Query("UPDATE Assets a SET a.asset_name=:aname,a.atype=:tid,a.asset_number=:asnum,a.model_number=:monum WHERE a.asset_id=:aid")
 	@Modifying
 	@Transactional
-	public int updateAsset(String aname,Long tid,String asnum,String monum,Long aid);
+	@Query("UPDATE Assets a SET a.asset_name=:aname,a.atype.type_id=:tid,a.asset_number=:asnum,a.model_number=:monum,a.quantity=:qty WHERE a.asset_id=:aid")
+	public int updateAsset(String aname,Long tid,String asnum,String monum,String qty,Long aid);
 	
 
 	@Query("SELECT a FROM Assets a JOIN a.atype  atypes")// JOIN using JPQL

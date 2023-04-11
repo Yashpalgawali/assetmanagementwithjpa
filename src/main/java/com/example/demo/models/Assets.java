@@ -28,6 +28,8 @@ public class Assets {
 	
 	private String model_number;
 	
+	private String quantity;
+	
 	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE})
 	@JoinColumn(name="type_id",referencedColumnName = "type_id")
 	private AssetType atype;

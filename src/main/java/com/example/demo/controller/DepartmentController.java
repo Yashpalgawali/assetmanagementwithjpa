@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.models.Company;
@@ -96,5 +97,11 @@ public class DepartmentController {
 		return "ViewDepartments";
 	}
 	
+	
+	@RequestMapping("/getdeptbycompid/{id}")@ResponseBody
+	public List<Department> getDepartmentByCompanyId(@PathVariable("id")String id)
+	{
+		return deptserv.getDepartmentByCompanyId(id);
+	}
 	
 }

@@ -37,9 +37,7 @@ public class AssetServImpl implements AssetService {
 	public int updateAssets(Assets asset) {
 		// TODO Auto-generated method stub
 		
-		System.err.println(asset.getAtype().getType_id()+"\n"+asset.getAsset_number());
-		
-		return assetrepo.updateAsset(asset.getAsset_name(), asset.getAtype().getType_id(), asset.getAsset_number(), asset.getModel_number(), asset.getAsset_id());
+		return assetrepo.updateAsset(asset.getAsset_name(), asset.getAtype().getType_id(), asset.getAsset_number(), asset.getModel_number(), asset.getQuantity() , asset.getAsset_id());
 	}
 
 }
