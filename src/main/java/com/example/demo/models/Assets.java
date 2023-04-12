@@ -9,10 +9,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name="tbl_assets")
 public class Assets {
@@ -30,8 +35,19 @@ public class Assets {
 	
 	private String quantity;
 	
+	@Transient
+	private Long count;
+	
 	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE})
 	@JoinColumn(name="type_id",referencedColumnName = "type_id")
 	private AssetType atype;
+
+	public Assets(Long asset_id, Long count) {
+		super();
+		this.asset_id = asset_id;
+		this.count = count;
+	}
+
+		
 }
 

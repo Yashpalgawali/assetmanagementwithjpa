@@ -40,4 +40,17 @@ public class AssetServImpl implements AssetService {
 		return assetrepo.updateAsset(asset.getAsset_name(), asset.getAtype().getType_id(), asset.getAsset_number(), asset.getModel_number(), asset.getQuantity() , asset.getAsset_id());
 	}
 
+	@Override
+	public int updateAssetQuantityByAssetId(Long asid,String qty) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getAssetQuantityByAssetId(Long asid) {
+		// TODO Auto-generated method stub
+		
+		return assetrepo.getQuantiyByAssetId(asid);
+	}
+
 }
