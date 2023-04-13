@@ -43,7 +43,7 @@ public class AssetServImpl implements AssetService {
 	@Override
 	public int updateAssetQuantityByAssetId(Long asid,String qty) {
 		// TODO Auto-generated method stub
-		return 0;
+		return assetrepo.updateAssetQuantityByAssetId(asid, qty);
 	}
 
 	@Override

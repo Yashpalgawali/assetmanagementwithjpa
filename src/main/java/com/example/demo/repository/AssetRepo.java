@@ -25,12 +25,13 @@ public interface AssetRepo extends JpaRepository<Assets, Long> {
 	//@Query(value="SELECT * FROM tbl_assets JOIN tbl_assettype ON tbl_assettype.type_id=tbl_assets.type_id ",nativeQuery = true)
 	public List<Assets> getAllAssets(); 
 	
-	
+	@Modifying
+	@Transactional
 	@Query("UPDATE Assets a SET a.quantity=:qty WHERE a.asset_id=:asid")
 	public int updateAssetQuantityByAssetId(Long asid,String qty);
 	
-	@Query("SELECT new com.example.demo.models.Assets(a.asset_id,COUNT(a.asset_id)) FROM Assets a WHERE a.asset_id=:asid")
-	public int getAssetQuantityByAssetId(Long asid);
+//	@Query("SELECT new com.example.demo.models.Assets(a.asset_id,COUNT(a.asset_id)) FROM Assets a WHERE a.asset_id=:asid")
+//	public int getAssetQuantityByAssetId(Long asid);
 	
 	@Query("SELECT a.quantity FROM Assets a WHERE a.asset_id=:asid")
 	public int getQuantiyByAssetId(Long asid);
