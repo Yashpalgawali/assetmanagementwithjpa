@@ -43,6 +43,9 @@ public class AssetServImpl implements AssetService {
 	@Override
 	public int updateAssetQuantityByAssetId(Long asid,String qty) {
 		// TODO Auto-generated method stub
+		
+		System.err.println("inside updateAssetQuantityByAssetId Service layer ---->>>\nAsset ID is ->> "+asid+"\nQuantity ->> "+qty+"\n");
+		
 		return assetrepo.updateAssetQuantityByAssetId(asid, qty);
 	}
 

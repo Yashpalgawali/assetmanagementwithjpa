@@ -11,9 +11,13 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="tbl_employee")
 public class Employee {
@@ -29,16 +33,19 @@ public class Employee {
 	
 	private String emp_contact;
 	
-	@ManyToOne(targetEntity = Designation.class,cascade = {CascadeType.MERGE,CascadeType.DETACH,CascadeType.REMOVE})
+	@ManyToOne(targetEntity = Designation.class,cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
 	@JoinColumn(name="desig_id",referencedColumnName = "desig_id")
 	private Designation designation;
 	
-	@ManyToOne(targetEntity = Department.class,cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+	@ManyToOne(targetEntity = Department.class,cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE})
 	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
 	private Department department;
 	
 	@Transient
 	private String multi_assets;
+	
+	@Transient
+	private String comments;
 	
 	
 }

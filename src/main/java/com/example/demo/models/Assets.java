@@ -38,7 +38,7 @@ public class Assets {
 	@Transient
 	private Long count;
 	
-	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE, CascadeType.REFRESH})
 	@JoinColumn(name="type_id",referencedColumnName = "type_id")
 	private AssetType atype;
 

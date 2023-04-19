@@ -78,26 +78,31 @@ public class EmployeeController {
 			{
 				if(Character.isDigit(chararr[i]))
 				{
-					int asid = Character.getNumericValue(chararr[i]);
+					long asid = Character.getNumericValue(chararr[i]);
 					
 					Assets ast = new Assets();
-					ast.setAsset_id((long)asid);
+					
+					Assets get_assets = assetserv.getAssetsById(""+ast.getAsset_id());
+					
+					ast.setAsset_id(asid);
+					ast.setAsset_name(get_assets.getAsset_name());
+					
 					
 					assignasset.setEmployee(emp);
-					assignasset.setAssign_date(tday);
-					assignasset.setAssign_time(ttime);
+					assignasset.setAssign_date(ddate.format(today.now()));
+					assignasset.setAssign_time(dtime.format(today.now()));
 					assignasset.setAsset(ast);
 					
 					assignasset = assignserv.saveAssignedAssets(assignasset);
 					if(assignasset!=null)
 					{
 						System.err.println("assets assigned successfully ");
-						int qty = assetserv.getAssetQuantityByAssetId((long)asid);
+						int qty = assetserv.getAssetQuantityByAssetId(asid);
 						
 						System.err.println("Total quantity of asset id -> "+asid+" is ->>> "+qty);
 						qty-=1;
 						
-						assetserv.updateAssetQuantityByAssetId((long)asid, ""+qty);
+						assetserv.updateAssetQuantityByAssetId(asid, ""+qty);
 					}
 					
 					AssetAssignHistory ahist = new AssetAssignHistory();
@@ -112,12 +117,23 @@ public class EmployeeController {
 				}
 			}
 			attr.addFlashAttribute("response", "Assets are assigned successfully");
-			return "redirect:/viewassignassets";
+			return "redirect:/viewassignedassets";
 		}
 		else {
 			attr.addFlashAttribute("reserr", "Employee is not Saved");
-			return "redirect:/viewassignassets";
+			return "redirect:/viewassignedassets";
 		}
+	}
+	
+	
+	@GetMapping("/viewassignedassets")
+	public String viewAssignedAssets(Model model)
+	{
+		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
 		
+		aslist.stream().forEach(e->System.err.println(e));
+		
+		//model.addAttribute("aslist", aslist);
+		return "ViewAssignedAssets";
 	}
 }

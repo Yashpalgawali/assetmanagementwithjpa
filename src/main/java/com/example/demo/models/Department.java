@@ -30,7 +30,7 @@ public class Department {
 	private String dept_name;
 	
 	
-	@ManyToOne(targetEntity = Company.class,cascade = {CascadeType.MERGE,CascadeType.REMOVE})
+	@ManyToOne(targetEntity = Company.class,cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
 	@JoinColumn(name="comp_id",referencedColumnName = "comp_id")
 	private Company company;
 	
