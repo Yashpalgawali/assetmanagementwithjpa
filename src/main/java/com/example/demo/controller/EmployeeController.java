@@ -19,6 +19,7 @@ import com.example.demo.models.AssignedAssets;
 import com.example.demo.models.Employee;
 import com.example.demo.service.AssetAssignHistService;
 import com.example.demo.service.AssetService;
+import com.example.demo.service.AssetTypeService;
 import com.example.demo.service.AssignedAssetService;
 import com.example.demo.service.CompanyService;
 import com.example.demo.service.DesignationService;
@@ -44,6 +45,9 @@ public class EmployeeController {
 	
 	@Autowired
 	AssetAssignHistService ahistserv;
+	
+	@Autowired
+	AssetTypeService atypeserv;
 	
 	private LocalDateTime today;
 	
@@ -82,11 +86,18 @@ public class EmployeeController {
 					
 					Assets ast = new Assets();
 					
-					Assets get_assets = assetserv.getAssetsById(""+ast.getAsset_id());
+					String astid =String.valueOf(asid);
+					
+					Assets get_assets = assetserv.getAssetsById(astid);
+					
+					System.err.println("inside save employee "+get_assets.toString()+"\n");
 					
 					ast.setAsset_id(asid);
 					ast.setAsset_name(get_assets.getAsset_name());
-					
+					ast.setAtype(atypeserv.getAssetTypeById(""+get_assets.getAtype().getType_id()));
+					ast.setAsset_number(get_assets.getAsset_number());
+					ast.setModel_number(get_assets.getModel_number());
+					ast.setQuantity(get_assets.getQuantity());
 					
 					assignasset.setEmployee(emp);
 					assignasset.setAssign_date(ddate.format(today.now()));
@@ -130,10 +141,9 @@ public class EmployeeController {
 	public String viewAssignedAssets(Model model)
 	{
 		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
-		
 		aslist.stream().forEach(e->System.err.println(e));
 		
-		//model.addAttribute("aslist", aslist);
+	//	model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
 	}
 }
