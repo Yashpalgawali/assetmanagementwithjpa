@@ -21,10 +21,10 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	}
 
 	@Override
-	public List<AssignedAssets> getAllAssignedAssets() {
+	public List<AssignedAssets[]> getAllAssignedAssets() {
 		// TODO Auto-generated method stub
 		
-		List<AssignedAssets> alist = assignassetrepo.getAllAssignedAssets(); 
+		List<AssignedAssets[]> alist = assignassetrepo.getAllAssignedAssets(); 
 		
 		System.out.println("inside getAllAssignedAssets Service layer \n");
 		

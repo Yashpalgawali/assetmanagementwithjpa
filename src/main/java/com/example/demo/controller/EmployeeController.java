@@ -140,8 +140,8 @@ public class EmployeeController {
 	@GetMapping("/viewassignedassets")
 	public String viewAssignedAssets(Model model)
 	{
-		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
-		aslist.stream().forEach(e->System.err.println(e));
+		List<AssignedAssets[]> aslist = assignserv.getAllAssignedAssets();
+		aslist.stream().forEach(e->System.err.println(e.toString()));
 		
 	//	model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";

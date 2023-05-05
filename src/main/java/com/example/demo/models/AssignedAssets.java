@@ -2,19 +2,36 @@ package com.example.demo.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.PersistenceContext;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.hibernate.annotations.NamedNativeQuery;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+
+
+
+@NamedNativeQuery(name = "getassignedassets", query = "SELECT tbl_assigned_assets.*,GROUP_CONCAT(tbl_assets.asset_name ) AS assigned_assets FROM tbl_assigned_assets JOIN tbl_assets ON tbl_assets.asset_id=tbl_assigned_assets.asset_id ")
+
+@SqlResultSetMapping(name = "getassignedassets" , 
+entities = { @EntityResult(entityClass = com.example.demo.models.AssignedAssets.class,
+			fields = {@FieldResult(name="assigned_assets", column = "assigned_assets")
+					}
+			)} )
 
 @Data
 @AllArgsConstructor
@@ -23,10 +40,12 @@ import lombok.NoArgsConstructor;
 @Table(name="tbl_assigned_assets")
 public class AssignedAssets {
 
+	
 	@Id
 	@SequenceGenerator(name="assigned_asset_seq",initialValue = 1,allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.AUTO,generator = "assigned_asset_seq")
 	private Long assigned_asset_id;
+	
 	
 	@ManyToOne(targetEntity = Employee.class , cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE})
 	@JoinColumn(name="emp_id",referencedColumnName = "emp_id")
