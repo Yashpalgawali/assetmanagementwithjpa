@@ -44,7 +44,6 @@ public class EmployeeServImpl implements EmployeeService {
 		else {
 			return null;
 		}
-		
 	}
 
 	@Override
@@ -52,5 +51,4 @@ public class EmployeeServImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
 }

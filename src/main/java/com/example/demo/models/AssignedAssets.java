@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PersistenceContext;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -25,14 +26,18 @@ import lombok.NoArgsConstructor;
 
 
 
-@NamedNativeQuery(name = "getassignedassets", query = "SELECT tbl_assigned_assets.*,GROUP_CONCAT(tbl_assets.asset_name ) AS assigned_assets FROM tbl_assigned_assets JOIN tbl_assets ON tbl_assets.asset_id=tbl_assigned_assets.asset_id ")
+//@SqlResultSetMapping(name = "getassignedassets" , 
+//					entities = { 
+//								@EntityResult(entityClass = com.example.demo.models.AssignedAssets.class,
+//									fields = {@FieldResult(name="assigned_assets", column = "assigned_assets")
+//								}
+//							)} )
+				
 
-@SqlResultSetMapping(name = "getassignedassets" , 
-entities = { @EntityResult(entityClass = com.example.demo.models.AssignedAssets.class,
-			fields = {@FieldResult(name="assigned_assets", column = "assigned_assets")
-					}
-			)} )
-
+//@NamedNativeQuery(name = "getassignedassets", 
+//				query = "SELECT tbl_assigned_assets.*,GROUP_CONCAT(tbl_assets.asset_name ) AS assigned_assets FROM tbl_assigned_assets "
+//						+ "JOIN tbl_assets ON tbl_assets.asset_id=tbl_assigned_assets.asset_id group by tbl_assigned_assets.emp_id",resultSetMapping ="getassignedassets"
+//				)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -60,7 +65,7 @@ public class AssignedAssets {
 	
 	private String assign_time;
 	
-	@Transient
+	@Transient 
 	private String assigned_assets;
 	
 	@Transient
@@ -68,5 +73,11 @@ public class AssignedAssets {
 	
 	@Transient
 	private Long asset_id;
+	
+	@Transient
+	private Long emp_id;
+	
+	@Transient
+	private String multi_assets;
 	
 }

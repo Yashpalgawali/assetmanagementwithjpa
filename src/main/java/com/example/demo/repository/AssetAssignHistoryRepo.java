@@ -11,9 +11,7 @@ import com.example.demo.models.AssetAssignHistory;
 @Repository("assetassignhistrepo")
 public interface AssetAssignHistoryRepo extends JpaRepository<AssetAssignHistory, Long> {
 
-	
-//	@Query("SELECT a,employee,assets FROM AssetAssignHistory a JOIN  a.employee employee a.assets assets  WHERE a.employee.emp_id=:empid")
-//	public List<AssetAssignHistory> getAssetAssginHistByEmpId(String empid);
-	
+	@Query("SELECT a FROM AssetAssignHistory a WHERE a.employee.emp_id=?1")
+	public List<AssetAssignHistory> getAssetAssginHistByEmpId(Long empid);
 }
  

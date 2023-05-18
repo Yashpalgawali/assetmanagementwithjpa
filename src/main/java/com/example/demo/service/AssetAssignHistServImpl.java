@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,8 @@ public class AssetAssignHistServImpl implements AssetAssignHistService {
 	@Override
 	public List<AssetAssignHistory> getAssetAssignHistoryByEmpId(String empid) {
 		// TODO Auto-generated method stub
-		
-		return null;
-		//return assetassignhistrepo.getAssetAssginHistByEmpId(empid);
+		Long eid = Long.valueOf(empid);
+		return assetassignhistrepo.getAssetAssginHistByEmpId(eid);
 	}
 
 }
