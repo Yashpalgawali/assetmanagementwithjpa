@@ -112,11 +112,10 @@ public class EmployeeController {
 				isassigned = assignserv.saveAssignedAssets(assignasset);
 				
 				if(isassigned!=null)
-				{	System.err.println(getasset.getAsset_name()+ " is assigned succcessfully");
+				{	
 					qty = (Integer)assetserv.getAssetQuantityByAssetId(astid);
 					qty-=1;
 					assetserv.updateAssetQuantityByAssetId(astid, ""+qty);
-					System.err.println("Asset Quantity is reduced of Id "+astid+" is reduced");
 					
 					AssetAssignHistory ahist = new AssetAssignHistory();
 				
@@ -144,6 +143,9 @@ public class EmployeeController {
 	public String viewAssignedAssets(Model model)
 	{
 		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
+		
+		aslist.stream().forEach(s->System.err.println(s));
+		
 		model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
 	}
@@ -156,7 +158,7 @@ public class EmployeeController {
 		model.addAttribute("elist", elist);
 		return "ViewAllEmployees";
 	}
-	
+	 
 	@GetMapping("/retrieveassetsbyempid/{id}")
 	public String retrieveAssets(@PathVariable("id") Long id,Model model,RedirectAttributes attr)
 	{
