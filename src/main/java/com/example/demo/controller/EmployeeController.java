@@ -8,6 +8,7 @@ import java.util.StringJoiner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -250,5 +251,65 @@ public class EmployeeController {
 		model.addAttribute("atypes", assigned_asset_type);
 		return "EditEmployee";
 	}
+	
+	@RequestMapping("/updateassignasset")@ResponseBody
+	public String updateAssignedAssets(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr)
+	{
+		String new_assets = emp.getMulti_assets();
+		System.err.println("New asset ids to be assigned --->> "+new_assets);
+		
+		String old_assets = "";
+		
+		List<AssignedAssets> assigned_assets = assignserv.getAssignedAssetsByEmpId(emp.getEmp_id());
+		
+		List<String> aslist =  null;
+		
+		for(int i=0;i<assigned_assets.size();i++)
+		{
+			if(i==0)
+				old_assets = assigned_assets.get(i).getAsset().getAsset_id().toString();
+			else
+				old_assets = old_assets+","+assigned_assets.get(i).getAsset().getAsset_id().toString();
+		}
+		
+		//System.err.println("\nAlready assigned asset ids --->> "+old_assets);
+		
+		if(old_assets.length()==new_assets.length())
+		{
+			System.err.println("Both length is equal\n");
+			
+			if(old_assets.equals(new_assets))
+			{
+				System.err.println("Both assets are equal \nAlreaddy assigned assets are "+old_assets+"\n New Assets to be assigned are -->>>> "+new_assets+"\n");
+			}
+		}
+		else
+		{
+			if(old_assets.length()>new_assets.length())
+			{
+				
+				System.err.println("Already assets are greater than new assets \nAlready assets length = "+old_assets.length()+"\nNew Assets Length is = "+new_assets.length());
+			}
+			if(old_assets.length()<new_assets.length())
+			{
+				System.err.println("Already assets are lesser than new assets   \nAlready assets length = "+old_assets.length()+"\nNew Assets Length is = "+new_assets.length());
+			}
+		}
+		
+		return "";
+//		int res =  empserv.updateEmployee(emp);
+//		
+//		if(res>0)
+//		{
+//			attr.addFlashAttribute("response", "Employee updated successfully");
+//			return "redirect:/viewallemployees";
+//		}
+//		else
+//		{
+//			attr.addFlashAttribute("reserr", "Employee is not updated ");
+//			return "redirect:/viewallemployees";
+//		}
+	}
+	
 	
 }

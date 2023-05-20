@@ -128,14 +128,9 @@
 							<select class="form-control mb-3" id="comp_id" name="comp_id" onchange="getdeptbycompid(this.value)">
 								<option selected disabled>Please Select Company</option>
 									<th:block th:each="comp : ${clist}">
-									   <th:block  th:if="${comp.comp_id}==${emp.department.company.comp_id}">
-											<option selected th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
-									   </th:block>	
-									    <th:block  th:unless="${comp.comp_id}==${emp.department.company.comp_id}">
-											<option th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
-									   </th:block>	
-									</th:block>
-						</select>
+									   <option  th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
+									</th:block>	
+							</select>
 					</div>
 
 					<div class="form-group  mb-3">
