@@ -21,6 +21,9 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	@Override
 	public AssignedAssets saveAssignedAssets(AssignedAssets assign) {
 		// TODO Auto-generated method stub
+		
+		System.err.println("Inside saveAssignedAssets method\n "+assign.toString());
+		
 		return assignassetrepo.save(assign);
 	}
 

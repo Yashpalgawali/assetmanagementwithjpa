@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityResult;
+import javax.persistence.FetchType;
 import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.NamedNativeQuery;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -52,12 +55,12 @@ public class AssignedAssets {
 	private Long assigned_asset_id;
 	
 	
-	@ManyToOne(targetEntity = Employee.class , cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE})
+	@ManyToOne(targetEntity = Employee.class , cascade = {CascadeType.ALL})
 	@JoinColumn(name="emp_id",referencedColumnName = "emp_id")
 	private Employee employee;
 	
 	
-	@ManyToOne(targetEntity = Assets.class,cascade = {CascadeType.REFRESH ,CascadeType.MERGE, CascadeType.REMOVE})
+	@ManyToOne(targetEntity = Assets.class,cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
 	@JoinColumn(name="asset_id", referencedColumnName = "asset_id")
 	private Assets asset;
 	

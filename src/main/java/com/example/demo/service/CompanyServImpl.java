@@ -54,7 +54,7 @@ public class CompanyServImpl implements CompanyService {
 	@Override
 	public int updateCompany(Company comp) {
 		// TODO Auto-generated method stub
-		return 0;
+		return comprepo.updateCompany(comp.getComp_name(), comp.getComp_id());
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.models.AssetAssignHistory;
+import com.example.demo.models.AssetType;
 import com.example.demo.models.Assets;
 import com.example.demo.models.AssignedAssets;
 import com.example.demo.models.Employee;
@@ -69,55 +70,57 @@ public class EmployeeController {
 		return "AddEmployee";
 	}
 	
-	@RequestMapping("/saveemployee")@ResponseBody
+	@RequestMapping("/saveemployee")
 	public String saveEmployee(@ModelAttribute("Employee")Employee empl,RedirectAttributes attr)
 	{
 		String asset_ids = empl.getMulti_assets();
 		
-	
+		AssignedAssets isassigned = null;
 		Employee emp = empserv.saveEmployee(empl);
 		if(emp!=null)
 		{
-			AssignedAssets assignasset = new AssignedAssets();
-			char[] chararr = asset_ids.toCharArray();
+			String[] asset_arr = asset_ids.split(",");
 			
-			for(int i=0;i<chararr.length;i++)
+			for(int i=0;i<asset_arr.length;i++)
 			{
-				if(Character.isDigit(chararr[i]))
-				{
-					long asid = Character.getNumericValue(chararr[i]);
-					
-//					Assets ast = new Assets();
-//					
-//					String astid =String.valueOf(asid);
-//					Assets get_assets = assetserv.getAssetsById(astid);
-//					
-//					ast.setAsset_id(asid);
-//					ast.setAsset_name(get_assets.getAsset_name());
-//					ast.setAtype(atypeserv.getAssetTypeById(""+get_assets.getAtype().getType_id()));
-//					ast.setAsset_number(get_assets.getAsset_number());
-//					ast.setModel_number(get_assets.getModel_number());
-//					ast.setQuantity(get_assets.getQuantity());
-					
-					assignasset.setEmployee(emp);
-					assignasset.setAssign_date(ddate.format(today.now()));
-					assignasset.setAssign_time(dtime.format(today.now()));
-					assignasset.setEmp_id(emp.getEmp_id());
-					//assignasset.setAsset(ast);
-					
-					assignasset = assignserv.saveAssignedAssets(assignasset);
-					if(assignasset!=null)
-					{
-						System.err.println("Asset with Id "+asid+" saved\n");
-						int qty = assetserv.getAssetQuantityByAssetId(asid);
-						qty-=1;
-						
-						assetserv.updateAssetQuantityByAssetId(asid, ""+qty);
-					}
+				AssignedAssets assignasset = new AssignedAssets();
+				int qty =0;
+				
+				Long astid = Long.valueOf(asset_arr[i]);
+				
+				Assets ast = new Assets();
+				Assets getasset = assetserv.getAssetsById(""+astid);
+				
+				AssetType atype = new AssetType();
+				
+				atype = atypeserv.getAssetTypeById(""+getasset.getAtype().getType_id());
+				
+				ast.setAtype(atype);
+				
+				ast.setAsset_id(astid);
+				ast.setAsset_name(getasset.getAsset_name());
+				ast.setAsset_number(getasset.getAsset_number());
+				ast.setModel_number(getasset.getModel_number());
+				ast.setQuantity(getasset.getQuantity());
+				
+				assignasset.setEmployee(emp);
+				assignasset.setAsset(ast);
+			
+				assignasset.setAssign_date(ddate.format(today.now()));
+				assignasset.setAssign_time(dtime.format(today.now()));
+				
+				isassigned = assignserv.saveAssignedAssets(assignasset);
+				
+				if(isassigned!=null)
+				{	System.err.println(getasset.getAsset_name()+ " is assigned succcessfully");
+					qty = (Integer)assetserv.getAssetQuantityByAssetId(astid);
+					qty-=1;
+					assetserv.updateAssetQuantityByAssetId(astid, ""+qty);
+					System.err.println("Asset Quantity is reduced of Id "+astid+" is reduced");
 					
 					AssetAssignHistory ahist = new AssetAssignHistory();
-					
-					ahist.setAsset_id(asid);
+				
+					ahist.setAsset(ast);
 					ahist.setEmployee(emp);
 					ahist.setOperation_date(tday);
 					ahist.setOperation_time(ttime);
@@ -126,6 +129,7 @@ public class EmployeeController {
 					ahistserv.saveAssetAssignHistory(ahist);
 				}
 			}
+
 			attr.addFlashAttribute("response", "Assets are assigned successfully");
 			return "redirect:/viewassignedassets";
 		}
@@ -158,12 +162,9 @@ public class EmployeeController {
 	{
 		List<AssignedAssets> assign = assignserv.getAssignedAssetsByEmpId(id);
 		Employee empl = null;
-		
-		
 		if(assign.size()>0)
 		{	
 			Long[] strArray = new Long[assign.size()];
-			
 			for(int i=0;i<assign.size();i++)
 			{
 				empl = assign.get(i).getEmployee();
@@ -208,18 +209,44 @@ public class EmployeeController {
 		return "ViewEmployeeHistory";
 	}
 	
-	@GetMapping("/editempassignassetbyempid/{id}")@ResponseBody
+	@GetMapping("/editempassignassetbyempid/{id}")
 	public String editEmployeeByEmpId(@PathVariable("id") String empid,Model model,RedirectAttributes attr)
 	{
 		Employee emp = empserv.getEmployeeById(empid);
+		List<AssignedAssets> aslist =  assignserv.getAssignedAssetsByEmpId(Long.valueOf(empid));
 		
-		Long eid = Long.valueOf(empid);
+		String assigned_assets = "",assigned_asset_type="",assigned_ids="";
 		
-		List<AssignedAssets> aslist =  assignserv.getAssignedAssetsByEmpId(eid);
+		Long[] strArray = new Long[aslist.size()];
 		
-		System.err.println("\n"+aslist.toString()+"\n");
+		for(int i=0;i<aslist.size();i++)
+		{
+			if(i==0){
+				assigned_assets = assigned_assets+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
+				assigned_asset_type =assigned_asset_type+aslist.get(i).getAsset().getAtype().getType_name();
+				//assigned_ids = assigned_ids+aslist.get(i).getAsset().getAsset_id();
+				strArray[i] = aslist.get(i).getAsset().getAsset_id();
+			}
+			else{
+				assigned_assets = assigned_assets+","+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
+				assigned_asset_type =assigned_asset_type+","+aslist.get(i).getAsset().getAtype().getType_name();
+				//assigned_ids = assigned_ids+","+aslist.get(i).getAsset().getAsset_id();
+			
+				strArray[i] =aslist.get(i).getAsset().getAsset_id(); 
+				//Long.valueOf(assigned_ids);
+			}
+		}
+		System.err.println("Employee -->> "+emp.toString());
 		
-		return ""+emp.toString();
+		model.addAttribute("clist", compserv.getAllCompanies());
+		model.addAttribute("desiglist", desigserv.getAllDesignations());
+		model.addAttribute("aslist", assetserv.getAllAssets());
+		model.addAttribute("emp", emp);
+		model.addAttribute("assignasset", assigned_assets);
+		model.addAttribute("assignedlist", strArray);
+		model.addAttribute("atlist",  atypeserv.getAllAssetTypes());
+		model.addAttribute("atypes", assigned_asset_type);
+		return "EditEmployee";
 	}
 	
 }

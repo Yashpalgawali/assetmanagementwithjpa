@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,7 +41,7 @@ public class Assets {
 	
 	
 	
-	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE, CascadeType.REFRESH})
+	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE, CascadeType.REFRESH},fetch = FetchType.LAZY)
 	@JoinColumn(name="type_id",referencedColumnName = "type_id")
 	private AssetType atype;
 
