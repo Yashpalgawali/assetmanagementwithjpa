@@ -18,6 +18,7 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	@Autowired
 	AssetRepo assetrepo;
 	
+
 	@Override
 	public AssignedAssets saveAssignedAssets(AssignedAssets assign) {
 		// TODO Auto-generated method stub
