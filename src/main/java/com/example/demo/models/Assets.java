@@ -41,7 +41,7 @@ public class Assets {
 	
 	
 	
-	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE,CascadeType.REMOVE, CascadeType.REFRESH},fetch = FetchType.LAZY)
+	@ManyToOne(targetEntity = AssetType.class, cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
 	@JoinColumn(name="type_id",referencedColumnName = "type_id")
 	private AssetType atype;
 

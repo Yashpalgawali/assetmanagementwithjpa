@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,11 +34,11 @@ public class Employee {
 	
 	private String emp_contact;
 	
-	@ManyToOne(targetEntity = Designation.class,cascade = {CascadeType.MERGE,CascadeType.REMOVE,CascadeType.REFRESH})
+	@ManyToOne(targetEntity = Designation.class,cascade = {CascadeType.MERGE})
 	@JoinColumn(name="desig_id",referencedColumnName = "desig_id")
 	private Designation designation;
 	
-	@ManyToOne(targetEntity = Department.class,cascade = {CascadeType.MERGE,CascadeType.REFRESH,CascadeType.REMOVE})
+	@ManyToOne(targetEntity = Department.class,cascade = {CascadeType.MERGE},fetch = FetchType.LAZY)
 	@JoinColumn(name="dept_id",referencedColumnName = "dept_id")
 	private Department department;
 	
