@@ -252,78 +252,18 @@ public class EmployeeController {
 		return "EditEmployee";
 	}
 	
-	@RequestMapping("/updateassignasset")@ResponseBody
+	@RequestMapping("/updateassignasset")
 	public String updateAssignedAssets(@ModelAttribute("Employee")Employee emp,RedirectAttributes attr)
 	{
 		int res = empserv.updateEmployee(emp);
 		if(res>0){
-			return "Employee is updated";
+			attr.addFlashAttribute("response", "Assets are assigned successfully");
+			return "redirect:/viewassignedassets";
 		}
 		else{
-			return "Employee Not updated";
+			attr.addFlashAttribute("reserr", "Assets are not assigned ");
+			return "redirect:/viewassignedassets";
 		}
-//		List<AssignedAssets> assigned_assets = assignserv.getAssignedAssetsByEmpId(emp.getEmp_id());
-//		
-//		List<String> aslist =  null;
-//		
-//		for(int i=0;i<assigned_assets.size();i++)
-//		{
-//			if(i==0)
-//				old_assets = assigned_assets.get(i).getAsset().getAsset_id().toString();
-//			else
-//				old_assets = old_assets+","+assigned_assets.get(i).getAsset().getAsset_id().toString();
-//		}
-//		
-//		System.err.println("\nAlready assigned asset ids --->> "+old_assets);
-//		
-//		if(old_assets.length()==new_assets.length())
-//		{
-//			System.err.println("Both length is equal\n");
-//			
-//			if(!old_assets.equals(new_assets))
-//			{
-//				//System.err.println("Both assets are equal \nAlreaddy assigned assets are "+old_assets+"\n New Assets to be assigned are -->>>> "+new_assets+"\n");
-//				char[] chararr = new_assets.toCharArray();
-//				for(int i=0;i<new_assets.length();i++)
-//				{
-//					System.err.println("New asset id is ->> "+new_assets+"\n if already assigned and new assigned values are "+old_assets.contains(new_assets));
-//					
-//					for(int j=0;j<chararr.length ;j++)
-//					{
-//						if(Character.isDigit(chararr[j]))
-//						{
-//							int asid = Character.getNumericValue(chararr[j]);
-//							
-//							if(old_assets.contains(""+asid))
-//							{
-//								//System.err.println(asid+" contains in the "+old_assets);
-//								continue;
-//							}
-//							else
-//							{
-//								System.err.println(asid+" not present in the "+old_assets);
-//							}
-//						}
-//					}
-//						
-//					
-//				}
-//			}
-//		}
-//		else
-//		{
-//			if(old_assets.length()>new_assets.length())
-//			{
-//				System.err.println("Already assets are greater than new assets \nAlready assets length = "+old_assets.length()+"\nNew Assets Length is = "+new_assets.length());
-//			}
-//			if(old_assets.length()<new_assets.length())
-//			{
-//				System.err.println("Already assets are lesser than new assets   \nAlready assets length = "+old_assets.length()+"\nNew Assets Length is = "+new_assets.length());
-//			}
-//		}
-		
-//		return "";
-
 	}
 	
 	

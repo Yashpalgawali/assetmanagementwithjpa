@@ -55,7 +55,7 @@ public class AssignedAssets {
 	private Long assigned_asset_id;
 	
 	
-	@ManyToOne(targetEntity = Employee.class , cascade = {CascadeType.ALL})
+	@ManyToOne(targetEntity = Employee.class , cascade = {CascadeType.MERGE})
 	@JoinColumn(name="emp_id",referencedColumnName = "emp_id")
 	private Employee employee;
 	
