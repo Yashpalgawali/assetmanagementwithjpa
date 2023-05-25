@@ -238,7 +238,6 @@ public class EmployeeServImpl implements EmployeeService {
 			{
 				if(olist.contains(nw_assets[i]))
 				{
-					//System.err.println("\n Asset id "+nw_assets[i]+" from new assets is present in old assets list \n");
 					continue;
 				}
 				else
@@ -310,62 +309,126 @@ public class EmployeeServImpl implements EmployeeService {
 			{
 				if(nlist.contains(ol_assets[i]))
 				{
-					//System.err.println("\n Asset id "+nw_assets[i]+" from new assets is present in old assets list \n");
-					continue;
+					System.err.println("\n Asset id "+ol_assets[i]+" from new assets is present in old assets list \n");
+					//continue;
 				}
 				else
 				{
-					AssignedAssets assignasset = new AssignedAssets();
+					System.err.println("\n Asset id "+ol_assets[i]+" from new assets is NOT present in old assets list \n");
 					Long asid = Long.valueOf(ol_assets[i]);
-					int qty =0;
+					int output = assignassetrepo.deleteAssignedAssetByEmpidAssetId(asid, emp.getEmp_id());
 					
-					Long astid = Long.valueOf(asid);
-					
-					Assets ast = new Assets();
-					
-					assetrepo.findById(astid);
-					Assets getasset = assetrepo.findById(astid).get();
-					
-					AssetType atype = new AssetType();
-					
-					atype = atyperepo.findById(getasset.getAtype().getType_id()).get();
-					
-					ast.setAtype(atype);
-					
-					ast.setAsset_id(astid);
-					ast.setAsset_name(getasset.getAsset_name());
-					ast.setAsset_number(getasset.getAsset_number());
-					ast.setModel_number(getasset.getModel_number());
-					ast.setQuantity(getasset.getQuantity());
-					
-					assignasset.setEmployee(emp);
-					assignasset.setAsset(ast);
-				
-					assignasset.setAssign_date(ddate.format(today.now()));
-					assignasset.setAssign_time(dtime.format(today.now()));
-					
-					isassigned = assignassetrepo.save(assignasset);
-					
-					if(isassigned!=null)
+					if(output>0)
 					{	
-						qty = assetrepo.getQuantiyByAssetId(astid);
-
-						qty-=1;
-						assetrepo.updateAssetQuantityByAssetId(astid, ""+qty);
+						System.err.println("\n Asset id "+asid+" is retrieved successfully\n");
+						int qty = assetrepo.getQuantiyByAssetId(asid);
+						qty+=1;
+						
+						assetrepo.updateAssetQuantityByAssetId(asid, ""+qty);
 						
 						AssetAssignHistory ahist = new AssetAssignHistory();
-					
+						
+						Assets ast = new Assets();
+						
+						Assets getasset = assetrepo.findById(asid).get();
+						
+						AssetType atype = new AssetType();
+						
+						atype = atyperepo.findById(getasset.getAtype().getType_id()).get();
+						
+						ast.setAtype(atype);
+						
+						ast.setAsset_id(asid);
+						ast.setAsset_name(getasset.getAsset_name());
+						ast.setAsset_number(getasset.getAsset_number());
+						ast.setModel_number(getasset.getModel_number());
+						ast.setQuantity(getasset.getQuantity());
+						
 						ahist.setAsset(ast);
 						ahist.setEmployee(emp);
 						ahist.setOperation_date(tday);
 						ahist.setOperation_time(ttime);
-						ahist.setOperation("Asset Assigned");
+						ahist.setOperation("Asset Retrieved");
 						
 						assetassignhistrepo.save(ahist);
-						
 					}
 				}
 			}
+			
+//			assigned_assets = assignassetrepo.getAllAssignedAssetsByEmpId(emp.getEmp_id());
+//			
+//			ol_assets = new String[assigned_assets.size()];
+//			olist = List.of(ol_assets);
+//			
+//			System.err.println("\n After retriebving the asset id are "+assigned_assets.toString());
+			
+//			if(nw_assets.length>ol_assets.length)
+//			{	
+//				for(int i=0;i<nw_assets.length;i++)
+//				{
+//					if(nlist.contains(nw_assets[i]))
+//					{
+//						System.err.println("\n Asset id "+nw_assets[i]+" from new assets is present in old assets list \n");
+//						//continue;
+//					}
+//					else
+//					{
+//						AssignedAssets assignasset = new AssignedAssets();
+//						Long asid = Long.valueOf(nw_assets[i]);
+//						asid = Long.valueOf(nlist.get(i));
+//						
+//						int qty = 0;
+//						
+//						Long astid = Long.valueOf(asid);
+//						
+//						Assets ast = new Assets();
+//						
+//						assetrepo.findById(astid);
+//						Assets getasset = assetrepo.findById(astid).get();
+//						
+//						AssetType atype = new AssetType();
+//						
+//						atype = atyperepo.findById(getasset.getAtype().getType_id()).get();
+//						
+//						ast.setAtype(atype);
+//						
+//						ast.setAsset_id(astid);
+//						ast.setAsset_name(getasset.getAsset_name());
+//						ast.setAsset_number(getasset.getAsset_number());
+//						ast.setModel_number(getasset.getModel_number());
+//						ast.setQuantity(getasset.getQuantity());
+//						
+//						assignasset.setEmployee(emp);
+//						assignasset.setAsset(ast);
+//					
+//						assignasset.setAssign_date(ddate.format(today.now()));
+//						assignasset.setAssign_time(dtime.format(today.now()));
+//						
+//						isassigned = assignassetrepo.save(assignasset);
+//						
+//						if(isassigned!=null)
+//						{	
+//							qty = assetrepo.getQuantiyByAssetId(astid);
+//
+//							qty-=1;
+//							assetrepo.updateAssetQuantityByAssetId(astid, ""+qty);
+//							
+//							AssetAssignHistory ahist = new AssetAssignHistory();
+//						
+//							ahist.setAsset(ast);
+//							ahist.setEmployee(emp);
+//							ahist.setOperation_date(tday);
+//							ahist.setOperation_time(ttime);
+//							ahist.setOperation("Asset Assigned");
+//							
+//							assetassignhistrepo.save(ahist);
+//							
+//						}
+//					}
+//				}
+//			}
+			
+			
 		}
 		if(isassigned!=null)
 		{
