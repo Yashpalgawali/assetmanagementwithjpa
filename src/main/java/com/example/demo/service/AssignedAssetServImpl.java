@@ -23,8 +23,6 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	public AssignedAssets saveAssignedAssets(AssignedAssets assign) {
 		// TODO Auto-generated method stub
 		
-		System.err.println("Inside saveAssignedAssets method\n "+assign.toString());
-		
 		return assignassetrepo.save(assign);
 	}
 
@@ -33,6 +31,9 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 		// TODO Auto-generated method stub
 		
 		List<AssignedAssets> alist =  assignassetrepo.getAllAssignedAssets(); 
+		
+		System.err.println("\nInside getAllAssignedAssets service method\n");
+		alist.stream().forEach(e->System.err.println(e));		
 		return alist;
 	}
 
@@ -66,5 +67,11 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 			}
 		}
 		return res;
+	}
+
+	@Override
+	public List<Object[]> getAllAssignedassetsGroup() {
+		// TODO Auto-generated method stub
+		return assignassetrepo.getAllNewAssignedAssets();
 	}
 }

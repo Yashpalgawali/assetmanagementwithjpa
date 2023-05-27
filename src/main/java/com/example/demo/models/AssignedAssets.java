@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -71,8 +73,11 @@ public class AssignedAssets {
 	@Transient 
 	private String assigned_assets;
 	
+	@Transient 
+	private List<String> ass_assets;
+	
 	@Transient
-	private String assigned_asset_types;
+	private List<String> assigned_asset_types;
 	
 	@Transient
 	private Long asset_id;

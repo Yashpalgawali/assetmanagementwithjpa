@@ -60,7 +60,14 @@ public class EmployeeServImpl implements EmployeeService {
 	@Override
 	public List<Employee> getAllEmployees() {
 		// TODO Auto-generated method stub
-		return emprepo.findAll();
+		
+		try {
+			return emprepo.findAll();
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 
 	@Override

@@ -2,8 +2,11 @@ package com.example.demo.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +25,9 @@ import com.example.demo.models.AssetAssignHistory;
 import com.example.demo.models.AssetType;
 import com.example.demo.models.Assets;
 import com.example.demo.models.AssignedAssets;
+import com.example.demo.models.Company;
+import com.example.demo.models.Department;
+import com.example.demo.models.Designation;
 import com.example.demo.models.Employee;
 import com.example.demo.service.AssetAssignHistService;
 import com.example.demo.service.AssetService;
@@ -151,6 +157,61 @@ public class EmployeeController {
 		return "ViewAssignedAssets";
 	}
 	
+	@GetMapping("/viewgroupassets")@ResponseBody
+	public String viewAllAssignedAssets(Model model)
+	{
+		List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
+		
+		List<Object[]>  aslist = assignserv.getAllAssignedassetsGroup();
+		
+		aslist.forEach(ast->{
+					AssignedAssets asts = new AssignedAssets();
+					asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
+					asts.setAssign_date(ast[1].toString());
+					asts.setAssign_time(ast[2].toString());
+					asts.setAsset_id(Long.valueOf(ast[3].toString()));
+					asts.setEmp_id((Long.valueOf(ast[4].toString())));
+					
+					Employee emp = new Employee();
+					emp.setEmp_id((Long.valueOf(ast[13].toString())));
+					emp.setEmp_contact(ast[14].toString());
+					emp.setEmp_email(ast[15].toString());
+					emp.setEmp_name(ast[16].toString());
+					
+					Designation desig = new Designation();
+					desig.setDesig_id((Long.valueOf(ast[18].toString())));
+					desig.setDesig_name(ast[20].toString());
+					
+					
+					
+					Department dept = new Department();
+					dept.setDept_id((Long.valueOf(ast[21].toString())));
+					dept.setDept_name(ast[22].toString());
+					
+					Company comp = new Company();
+					comp.setComp_id((Long.valueOf(ast[23].toString())));
+					comp.setComp_name(ast[25].toString());
+					
+					emp.setDesignation(desig);
+					dept.setCompany(comp);
+					emp.setDepartment(dept);
+					
+					asts.setEmployee(emp);
+					
+					asts.setAss_assets(Stream.of(ast[26].toString().split(",")).collect(Collectors.toList()));
+					asts.setAssigned_asset_types(Stream.of(ast[27].toString().split(",")).collect(Collectors.toList()));
+					
+					alist.add(asts);
+		});
+		
+		alist.stream().forEach(e->System.err.println(e));
+		
+	//	aslist.stream().forEach(s->System.err.println(s.toString()));
+		
+	//	model.addAttribute("aslist", aslist);
+		return "ViewAssignedAssets";
+	}
+	
 	@GetMapping("/viewallemployees")
 	public String viewAllEmployees(Model model)
 	{
@@ -239,7 +300,6 @@ public class EmployeeController {
 				//Long.valueOf(assigned_ids);
 			}
 		}
-		System.err.println("Employee -->> "+emp.toString());
 		
 		model.addAttribute("clist", compserv.getAllCompanies());
 		model.addAttribute("desiglist", desigserv.getAllDesignations());

@@ -14,4 +14,6 @@ public interface AssignedAssetService {
 
 	public int retrieveAssetByEmpId(AssignedAssets assign);
 	
+	public List<Object[]> getAllAssignedassetsGroup();
+	
 }
