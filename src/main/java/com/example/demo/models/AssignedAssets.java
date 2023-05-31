@@ -30,19 +30,6 @@ import lombok.NoArgsConstructor;
 
 
 
-
-//@SqlResultSetMapping(name = "getassignedassets" , 
-//					entities = { 
-//								@EntityResult(entityClass = com.example.demo.models.AssignedAssets.class,
-//									fields = {@FieldResult(name="assigned_assets", column = "assigned_assets")
-//								}
-//							)} )
-				
-
-//@NamedNativeQuery(name = "getassignedassets", 
-//				query = "SELECT tbl_assigned_assets.*,GROUP_CONCAT(tbl_assets.asset_name ) AS assigned_assets FROM tbl_assigned_assets "
-//						+ "JOIN tbl_assets ON tbl_assets.asset_id=tbl_assigned_assets.asset_id group by tbl_assigned_assets.emp_id",resultSetMapping ="getassignedassets"
-//				)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -166,41 +166,39 @@ public class EmployeeController {
 		
 		aslist.forEach(ast->{
 					AssignedAssets asts = new AssignedAssets();
+					asts.setAss_assets(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()));
 					asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
 					asts.setAssign_date(ast[1].toString());
 					asts.setAssign_time(ast[2].toString());
 					asts.setAsset_id(Long.valueOf(ast[3].toString()));
 					asts.setEmp_id((Long.valueOf(ast[4].toString())));
 					
+					asts.setAssigned_asset_types(Stream.of(ast[6].toString().split(",")).collect(Collectors.toList()));
+					
 					Employee emp = new Employee();
-					emp.setEmp_id((Long.valueOf(ast[13].toString())));
-					emp.setEmp_contact(ast[14].toString());
-					emp.setEmp_email(ast[15].toString());
-					emp.setEmp_name(ast[16].toString());
+					
+					emp.setEmp_name(ast[7].toString());
+					emp.setEmp_email(ast[8].toString());
+					emp.setEmp_contact(ast[9].toString());
 					
 					Designation desig = new Designation();
-					desig.setDesig_id((Long.valueOf(ast[18].toString())));
-					desig.setDesig_name(ast[20].toString());
-					
-					
-					
+					desig.setDesig_id((Long.valueOf(ast[10].toString())));
+					desig.setDesig_name(ast[11].toString());
+
 					Department dept = new Department();
-					dept.setDept_id((Long.valueOf(ast[21].toString())));
-					dept.setDept_name(ast[22].toString());
+					dept.setDept_id((Long.valueOf(ast[12].toString())));
+					dept.setDept_name(ast[13].toString());
 					
 					Company comp = new Company();
-					comp.setComp_id((Long.valueOf(ast[23].toString())));
-					comp.setComp_name(ast[25].toString());
+					comp.setComp_id((Long.valueOf(ast[14].toString())));
+					comp.setComp_name(ast[15].toString());
 					
-					emp.setDesignation(desig);
 					dept.setCompany(comp);
+					
 					emp.setDepartment(dept);
-					
+					emp.setDesignation(desig);
 					asts.setEmployee(emp);
-					
-					asts.setAss_assets(Stream.of(ast[26].toString().split(",")).collect(Collectors.toList()));
-					asts.setAssigned_asset_types(Stream.of(ast[27].toString().split(",")).collect(Collectors.toList()));
-					
+				
 					alist.add(asts);
 		});
 		
@@ -208,7 +206,7 @@ public class EmployeeController {
 		
 	//	aslist.stream().forEach(s->System.err.println(s.toString()));
 		
-	//	model.addAttribute("aslist", aslist);
+		//model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
 	}
 	
