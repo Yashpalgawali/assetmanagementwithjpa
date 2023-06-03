@@ -75,8 +75,14 @@ public class EmployeeServImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		if(empid!=null)
 		{
-			Long eid = Long.valueOf(empid);
-			return emprepo.findById(eid).get();
+			try 
+			{		Long eid = Long.valueOf(empid);
+					return emprepo.findById(eid).get();
+			}
+			catch(Exception e)
+			{
+				return null;
+			}
 		}
 		else {
 			return null;

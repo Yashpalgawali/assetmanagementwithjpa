@@ -72,6 +72,12 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	@Override
 	public List<Object[]> getAllAssignedassetsGroup() {
 		// TODO Auto-generated method stub
-		return assignassetrepo.getAllNewAssignedAssets();
+		try {
+			return assignassetrepo.getAllNewAssignedAssets();
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
 	}
 }

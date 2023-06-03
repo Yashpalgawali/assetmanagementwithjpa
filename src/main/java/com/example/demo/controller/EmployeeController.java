@@ -151,22 +151,34 @@ public class EmployeeController {
 	{
 		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
 		
-		aslist.stream().forEach(s->System.err.println(s));
+		List<AssignedAssets> nlist = null;
+//		aslist.stream().forEach(s->System.err.println(s));
+//		
+		for(int i=0;i<aslist.size();i++)
+		{
+			System.err.println(aslist.get(i));
+		}
 		
 		model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
 	}
 	
+	
+	//This method returns the assigned assets in single column 
 	@GetMapping("/viewgroupassets")@ResponseBody
 	public String viewAllAssignedAssets(Model model)
 	{
 		List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
-		
 		List<Object[]>  aslist = assignserv.getAllAssignedassetsGroup();
 		
-		aslist.forEach(ast->{
+		if(aslist.size() >0)
+		{
+			aslist.forEach(ast->{
 					AssignedAssets asts = new AssignedAssets();
+					
+					asts.setAssigned(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()).toString());
 					asts.setAss_assets(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()));
+					
 					asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
 					asts.setAssign_date(ast[1].toString());
 					asts.setAssign_time(ast[2].toString());
@@ -200,14 +212,15 @@ public class EmployeeController {
 					asts.setEmployee(emp);
 				
 					alist.add(asts);
-		});
-		
-		alist.stream().forEach(e->System.err.println(e));
-		
-	//	aslist.stream().forEach(s->System.err.println(s.toString()));
-		
-		//model.addAttribute("aslist", aslist);
-		return "ViewAssignedAssets";
+			});
+			alist.stream().forEach(e->System.err.println(e));
+			
+			model.addAttribute("aslist", aslist);
+			return "ViewAssignedAssets";
+		}
+		else {
+			return "redirect:/viewallemployees";
+		}
 	}
 	
 	@GetMapping("/viewallemployees")
@@ -275,39 +288,42 @@ public class EmployeeController {
 	public String editEmployeeByEmpId(@PathVariable("id") String empid,Model model,RedirectAttributes attr)
 	{
 		Employee emp = empserv.getEmployeeById(empid);
-		List<AssignedAssets> aslist =  assignserv.getAssignedAssetsByEmpId(Long.valueOf(empid));
-		
-		String assigned_assets = "",assigned_asset_type="",assigned_ids="";
-		
-		Long[] strArray = new Long[aslist.size()];
-		
-		for(int i=0;i<aslist.size();i++)
-		{
-			if(i==0){
-				assigned_assets = assigned_assets+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
-				assigned_asset_type =assigned_asset_type+aslist.get(i).getAsset().getAtype().getType_name();
-				//assigned_ids = assigned_ids+aslist.get(i).getAsset().getAsset_id();
-				strArray[i] = aslist.get(i).getAsset().getAsset_id();
-			}
-			else{
-				assigned_assets = assigned_assets+","+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
-				assigned_asset_type =assigned_asset_type+","+aslist.get(i).getAsset().getAtype().getType_name();
-				//assigned_ids = assigned_ids+","+aslist.get(i).getAsset().getAsset_id();
+		if(emp!=null) {
+			List<AssignedAssets> aslist =  assignserv.getAssignedAssetsByEmpId(Long.valueOf(empid));
 			
-				strArray[i] =aslist.get(i).getAsset().getAsset_id(); 
-				//Long.valueOf(assigned_ids);
+			String assigned_assets = "",assigned_asset_type="";
+			
+			Long[] strArray = new Long[aslist.size()];
+			
+			for(int i=0;i<aslist.size();i++)
+			{
+				if(i==0){
+					assigned_assets = assigned_assets+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
+					assigned_asset_type =assigned_asset_type+aslist.get(i).getAsset().getAtype().getType_name();
+					strArray[i] = aslist.get(i).getAsset().getAsset_id();
+				}
+				else{
+					assigned_assets = assigned_assets+","+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
+					assigned_asset_type =assigned_asset_type+","+aslist.get(i).getAsset().getAtype().getType_name();
+					strArray[i] =aslist.get(i).getAsset().getAsset_id(); 
+				}
 			}
+			
+			model.addAttribute("clist", compserv.getAllCompanies());
+			model.addAttribute("desiglist", desigserv.getAllDesignations());
+			model.addAttribute("aslist", assetserv.getAllAssets());
+			model.addAttribute("emp", emp);
+			model.addAttribute("assignasset", assigned_assets);
+			model.addAttribute("assignedlist", strArray);
+			model.addAttribute("atlist",  atypeserv.getAllAssetTypes());
+			model.addAttribute("atypes", assigned_asset_type);
+			return "EditEmployee";
 		}
-		
-		model.addAttribute("clist", compserv.getAllCompanies());
-		model.addAttribute("desiglist", desigserv.getAllDesignations());
-		model.addAttribute("aslist", assetserv.getAllAssets());
-		model.addAttribute("emp", emp);
-		model.addAttribute("assignasset", assigned_assets);
-		model.addAttribute("assignedlist", strArray);
-		model.addAttribute("atlist",  atypeserv.getAllAssetTypes());
-		model.addAttribute("atypes", assigned_asset_type);
-		return "EditEmployee";
+		else {
+			attr.addFlashAttribute("reserr","No Employee found for given ID");
+			return "redirect:/viewallemployees";
+		}
+
 	}
 	
 	@RequestMapping("/updateassignasset")

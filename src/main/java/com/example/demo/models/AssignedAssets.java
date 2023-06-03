@@ -67,6 +67,9 @@ public class AssignedAssets {
 	private List<String> assigned_asset_types;
 	
 	@Transient
+	private String assigned;
+	
+	@Transient
 	private Long asset_id;
 	
 	@Transient

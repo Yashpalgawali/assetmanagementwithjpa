@@ -42,7 +42,6 @@
 		$("#comp_id").select2({
 			theme : 'classic',
 			width : 'resolve'
-
 		});
 
 		$("#dept_id").select2({
@@ -51,13 +50,12 @@
 		});
 
 		
-		$("#desig_id").select2({
+		$("#designation").select2({
 			theme : 'classic',
 			width : 'resolve'
 		});
 
 		$("#type_id").select2({
-			
 			width : 'resolve',
 			placeholder : 'Please Select Asset Type',
 			allowClear : true
@@ -65,11 +63,9 @@
 		});
 
 		$("#multi_assets").select2({
-			
 			width : 'resolve',
 			placeholder : 'Please Select Asset(s) ',
 			allowClear : true
-
 		});
 	})
 </script>
@@ -128,15 +124,23 @@
 							<select class="form-control mb-3" id="comp_id" name="comp_id" onchange="getdeptbycompid(this.value)">
 								<option selected disabled>Please Select Company</option>
 									<th:block th:each="comp : ${clist}">
-									   <option  th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
+									  	<th:block th:if="${comp.comp_id}==${emp.department.company.comp_id}">
+									   		<option selected th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
+										</th:block>
+										<th:block th:unless="${comp.comp_id}==${emp.department.company.comp_id}">
+									   		<option th:value="${comp.comp_id}" th:text="${comp.comp_name}"></option>
+										</th:block>
 									</th:block>	
 							</select>
 					</div>
 
 					<div class="form-group  mb-3">
-						<label for="department">Department</label> 
+						<label for="dept_id ">Department</label> 
 							<select class="form-control mb-3" id="dept_id" name="department">
 								<option selected disabled>Please Select Department</option>
+									
+								<option selected th:value="${emp.department.dept_id}" th:text="${emp.department.dept_name}"></option>
+										
 							</select>
 					</div>
 					
@@ -150,6 +154,7 @@
 							 	<input type="text" id="asset_names" name="asset_names" th:value="${assignasset}" class="form-control mb-3" readonly disabled="disabled"/>
 						</div>
 					</th:block>
+			
 					
 					<div class="form-group  mb-3">
 						<label for="type_id">Asset Type</label> 
@@ -165,7 +170,6 @@
 					  <div class="form-group">
 						<label for="multi_assets">Assets</label> 
 						<select class="form-control mb-3"  id="multi_assets" name="multi_assets" multiple="multiple">
-	
 
 							<th:block th:each="alst : ${aslist}"> <!--  1,2,3,4,5  --> 
 										<th:block th:if="${#arrays.contains( assignedlist,alst.asset_id )}">
