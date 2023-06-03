@@ -95,7 +95,7 @@ public class EmployeeServImpl implements EmployeeService {
 		
 		String new_assets = emp.getMulti_assets();
 		
-		System.err.println("New assets are \n"+new_assets);
+		//System.err.println("New assets are \n"+new_assets);
 		AssignedAssets isassigned = null;
 		
 		int res = emprepo.updateEmployee(emp.getEmp_name(), emp.getEmp_email(), emp.getEmp_contact(), emp.getDepartment().getDept_id(), emp.getDesignation().getDesig_id(), emp.getEmp_id());
@@ -113,13 +113,13 @@ public class EmployeeServImpl implements EmployeeService {
 			ol_assets[i] = assigned_assets.get(i).getAsset().getAsset_id().toString();
 		}
 		
-		for(int i=0;i<ol_assets.length;i++)
-		{
-			System.err.println("\nOld assets are \n"+ol_assets[i]+"\n");
-		}
-		
-		System.err.println("\n Old and new asset arrays are equal ->>  "+Arrays.equals(ol_assets, nw_assets));
-		
+//		for(int i=0;i<ol_assets.length;i++)
+//		{
+//			System.err.println("\nOld assets are \n"+ol_assets[i]+"\n");
+//		}
+//		
+//		System.err.println("\n Old and new asset arrays are equal ->>  "+Arrays.equals(ol_assets, nw_assets));
+//		
 		if(ol_assets.length==nw_assets.length)
 		{
 			List<String> olist= List.of(ol_assets);
@@ -130,7 +130,7 @@ public class EmployeeServImpl implements EmployeeService {
 			{
 				if(nlist.contains(ol_assets[i]))
 				{
-					System.err.println("\n Asset id "+ol_assets[i]+" from old assets is present in new assets list \n");
+					//System.err.println("\n Asset id "+ol_assets[i]+" from old assets is present in new assets list \n");
 					continue;
 				}
 				else 
@@ -140,7 +140,7 @@ public class EmployeeServImpl implements EmployeeService {
 					
 					if(output>0)
 					{	
-						System.err.println("\n Asset id "+asid+" is retrieved successfully\n");
+						//System.err.println("\n Asset id "+asid+" is retrieved successfully\n");
 						int qty = assetrepo.getQuantiyByAssetId(asid);
 						qty+=1;
 						
@@ -179,7 +179,7 @@ public class EmployeeServImpl implements EmployeeService {
 			{
 				if(olist.contains(nw_assets[i]))
 				{
-					System.err.println("\n Asset id "+ol_assets[i]+" from old assets is present in new assets list \n");
+					//System.err.println("\n Asset id "+ol_assets[i]+" from old assets is present in new assets list \n");
 					continue;
 				}
 				else
@@ -240,12 +240,12 @@ public class EmployeeServImpl implements EmployeeService {
 		//If Assets to be assigned are greater than the Already assigned assets
 		if(nw_assets.length>ol_assets.length)
 		{
-			System.err.println("New assets length is greater than Old ");
+			//System.err.println("New assets length is greater than Old ");
 			List<String> olist= List.of(ol_assets);
 			
 			List<String> nlist= List.of(nw_assets);
 			
-			System.err.println("\n Old assets list is -->> "+olist.toString()+"\n New Assets list is --->>> "+nlist.toString()+"\n");
+			//System.err.println("\n Old assets list is -->> "+olist.toString()+"\n New Assets list is --->>> "+nlist.toString()+"\n");
 			
 			for(int i=0;i<nw_assets.length;i++)
 			{
@@ -311,23 +311,23 @@ public class EmployeeServImpl implements EmployeeService {
 		//If Assets to be assigned are smaller than the Already assigned assets
 		if(nw_assets.length<ol_assets.length)
 		{
-			System.err.println("New assets length is lesser than Old ");
+			//System.err.println("New assets length is lesser than Old ");
 			List<String> olist= List.of(ol_assets);
 			
 			List<String> nlist= List.of(nw_assets);
 			
-			System.err.println("\n Old assets list is -->> "+olist.toString()+"\n New Assets list is --->>> "+nlist.toString()+"\n");
+			//System.err.println("\n Old assets list is -->> "+olist.toString()+"\n New Assets list is --->>> "+nlist.toString()+"\n");
 			
 			for(int i=0;i<ol_assets.length;i++)
 			{
 				if(nlist.contains(ol_assets[i]))
 				{
-					System.err.println("\n Asset id "+ol_assets[i]+" from new assets is present in old assets list \n");
-					//continue;
+					//System.err.println("\n Asset id "+ol_assets[i]+" from new assets is present in old assets list \n");
+					continue;
 				}
 				else
 				{
-					System.err.println("\n Asset id "+ol_assets[i]+" from new assets is NOT present in old assets list \n");
+					//System.err.println("\n Asset id "+ol_assets[i]+" from new assets is NOT present in old assets list \n");
 					Long asid = Long.valueOf(ol_assets[i]);
 					int output = assignassetrepo.deleteAssignedAssetByEmpidAssetId(asid, emp.getEmp_id());
 					
@@ -367,81 +367,7 @@ public class EmployeeServImpl implements EmployeeService {
 					}
 				}
 			}
-			
-//			assigned_assets = assignassetrepo.getAllAssignedAssetsByEmpId(emp.getEmp_id());
-//			
-//			ol_assets = new String[assigned_assets.size()];
-//			olist = List.of(ol_assets);
-//			
-//			System.err.println("\n After retriebving the asset id are "+assigned_assets.toString());
-			
-//			if(nw_assets.length>ol_assets.length)
-//			{	
-//				for(int i=0;i<nw_assets.length;i++)
-//				{
-//					if(nlist.contains(nw_assets[i]))
-//					{
-//						System.err.println("\n Asset id "+nw_assets[i]+" from new assets is present in old assets list \n");
-//						//continue;
-//					}
-//					else
-//					{
-//						AssignedAssets assignasset = new AssignedAssets();
-//						Long asid = Long.valueOf(nw_assets[i]);
-//						asid = Long.valueOf(nlist.get(i));
-//						
-//						int qty = 0;
-//						
-//						Long astid = Long.valueOf(asid);
-//						
-//						Assets ast = new Assets();
-//						
-//						assetrepo.findById(astid);
-//						Assets getasset = assetrepo.findById(astid).get();
-//						
-//						AssetType atype = new AssetType();
-//						
-//						atype = atyperepo.findById(getasset.getAtype().getType_id()).get();
-//						
-//						ast.setAtype(atype);
-//						
-//						ast.setAsset_id(astid);
-//						ast.setAsset_name(getasset.getAsset_name());
-//						ast.setAsset_number(getasset.getAsset_number());
-//						ast.setModel_number(getasset.getModel_number());
-//						ast.setQuantity(getasset.getQuantity());
-//						
-//						assignasset.setEmployee(emp);
-//						assignasset.setAsset(ast);
-//					
-//						assignasset.setAssign_date(ddate.format(today.now()));
-//						assignasset.setAssign_time(dtime.format(today.now()));
-//						
-//						isassigned = assignassetrepo.save(assignasset);
-//						
-//						if(isassigned!=null)
-//						{	
-//							qty = assetrepo.getQuantiyByAssetId(astid);
-//
-//							qty-=1;
-//							assetrepo.updateAssetQuantityByAssetId(astid, ""+qty);
-//							
-//							AssetAssignHistory ahist = new AssetAssignHistory();
-//						
-//							ahist.setAsset(ast);
-//							ahist.setEmployee(emp);
-//							ahist.setOperation_date(tday);
-//							ahist.setOperation_time(ttime);
-//							ahist.setOperation("Asset Assigned");
-//							
-//							assetassignhistrepo.save(ahist);
-//							
-//						}
-//					}
-//				}
-//			}
-			
-			
+
 		}
 		if(isassigned!=null)
 		{
@@ -450,7 +376,5 @@ public class EmployeeServImpl implements EmployeeService {
 		else {
 			return 0;
 		}
-		
-		
 	}
 }
