@@ -128,8 +128,8 @@ public class EmployeeController {
 				
 					ahist.setAsset(ast);
 					ahist.setEmployee(emp);
-					ahist.setOperation_date(tday);
-					ahist.setOperation_time(ttime);
+					ahist.setOperation_date(ddate.format(today.now()));
+					ahist.setOperation_time(dtime.format(today.now()));
 					ahist.setOperation("Asset Assigned");
 					
 					ahistserv.saveAssetAssignHistory(ahist);
@@ -152,12 +152,6 @@ public class EmployeeController {
 		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
 		
 		List<AssignedAssets> nlist = null;
-//		aslist.stream().forEach(s->System.err.println(s));
-//		
-		for(int i=0;i<aslist.size();i++)
-		{
-			System.err.println(aslist.get(i));
-		}
 		
 		model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
@@ -165,7 +159,7 @@ public class EmployeeController {
 	
 	
 	//This method returns the assigned assets in single column 
-	@GetMapping("/viewgroupassets")@ResponseBody
+	@GetMapping("/viewgroupassets")
 	public String viewAllAssignedAssets(Model model)
 	{
 		List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
@@ -213,7 +207,12 @@ public class EmployeeController {
 				
 					alist.add(asts);
 			});
-			alist.stream().forEach(e->System.err.println(e));
+			//alist.stream().forEach(e->System.err.println(e.getEmployee().getEmp_name()+" ->>  "+ e.getAss_assets()));
+			
+			for(int i=0;i<alist.size();i++)
+			{
+				System.err.println(alist.get(i).getEmployee().getEmp_name()+" --->>> "+alist.get(i).getAss_assets()+" ->> "+alist.get(i).getAssign_date());
+			}
 			
 			model.addAttribute("aslist", aslist);
 			return "ViewAssignedAssets";
@@ -266,8 +265,7 @@ public class EmployeeController {
 			attr.addFlashAttribute("response", "Assets are assigned successfully");
 			return "redirect:/viewassignedassets";
 		}
-		else
-		{
+		else{
 			attr.addFlashAttribute("reserr", "Assets are not assigned successfully");
 			return "redirect:/viewassignedassets";
 		}
@@ -278,10 +276,16 @@ public class EmployeeController {
 	{
 		List<AssetAssignHistory> ahist = ahistserv.getAssetAssignHistoryByEmpId(id);
 		
-		
-		model.addAttribute("ahist", ahist);
-		model.addAttribute("emp", empserv.getEmployeeById(id));
-		return "ViewEmployeeHistory";
+		if(ahist.size()>0)
+		{	
+			model.addAttribute("ahist", ahist);
+			model.addAttribute("emp", empserv.getEmployeeById(id));
+			return "ViewEmployeeHistory";
+		}
+		else {
+			attr.addFlashAttribute("reserr", "No History found");
+			return "redirect:/viewassignedassets";
+		}
 	}
 	
 	@GetMapping("/editempassignassetbyempid/{id}")

@@ -97,27 +97,28 @@
 						<thead>
 							<tr>
 								<th>Sr No.</th>
-								<th>Employee Name</th>
-								<th>Asset Name</th>
-								<th>Asset Type</th>
-								<th>Model Number</th>
-								<th>Email</th>
-								<th>Contact</th>
-								<th>Department</th>
-								<th>Company</th>
+<!-- 								<th>Employee Name</th> -->
+<!-- 								<th>Asset Name</th> -->
+<!-- 								<th>Asset Type</th> -->
+<!-- 								<th>Model Number</th> -->
+<!-- 								<th>Email</th> -->
+<!-- 								<th>Contact</th> -->
+<!-- 								<th>Department</th> -->
+<!-- 								<th>Company</th> -->
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="asset : ${aslist}">
-								<td th:text="${assetStat.count}"></td>
-								<td th:text="${asset.employee.emp_name}"></td>
-								<td th:text="${asset.asset.asset_name}"></td>
-								<td th:text="${asset.asset.atype.type_name}"></td>
-								<td th:text="${asset.asset.model_number}"></td>
-								<td th:text="${asset.employee.emp_email}"></td>
-								<td th:text="${asset.employee.emp_contact }"></td>
-								<td th:text="${asset.employee.department.dept_name }"></td>
-								<td th:text="${asset.employee.department.company.comp_name}"></td>
+							<tr th:each="ast : ${aslist}">
+								
+								<td th:text="${astStat.count}"></td>
+<!-- 								<td th:text="${ast.assign_date}"></td> -->
+<!-- 								<td th:text="${asset.asset.asset_name}"></td> -->
+<!-- 								<td th:text="${asset.asset.atype.type_name}"></td> -->
+<!-- 								<td th:text="${asset.asset.model_number}"></td> -->
+<!-- 								<td th:text="${asset.employee.emp_email}"></td> -->
+<!-- 								<td th:text="${asset.employee.emp_contact }"></td> -->
+<!-- 								<td th:text="${asset.employee.department.dept_name }"></td> -->
+<!-- 								<td th:text="${asset.employee.department.company.comp_name}"></td> -->
 							</tr>
 						</tbody>
 					</table>

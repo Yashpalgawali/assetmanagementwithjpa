@@ -46,14 +46,14 @@
                    </tr>
                </thead>
                <tbody>
-                   <tr th:each="comp : ${aslist}">
-                       <td th:text="${comp.asset_id}"></td>
-                       <td th:text="${comp.atype.type_name}"></td>
-                       <td th:text="${comp.asset_name}"></td>
-                       <td th:text="${comp.asset_number}"></td>
-                       <td th:text="${comp.model_number}"></td>
-                       <td th:text="${comp.quantity}"></td>
-                       <td><a th:href="@{/editasset/{id}(id=${comp.asset_id})}" class="btn btn-primary">Edit</a></td>
+                   <tr th:each="ast : ${aslist}">
+                       <td th:text="${astStat.count}"></td>
+                       <td th:text="${ast.atype.type_name}"></td>
+                       <td th:text="${ast.asset_name}"></td>
+                       <td th:text="${ast.asset_number}"></td>
+                       <td th:text="${ast.model_number}"></td>
+                       <td th:text="${ast.quantity}"></td>
+                       <td><a th:href="@{/editasset/{id}(id=${ast.asset_id})}" class="btn btn-primary">Edit</a></td>
                    </tr>
                </tbody>
 			

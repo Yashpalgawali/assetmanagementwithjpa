@@ -34,6 +34,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+
 @Table(name="tbl_assigned_assets")
 public class AssignedAssets {
 
@@ -77,5 +78,6 @@ public class AssignedAssets {
 	
 	@Transient
 	private String multi_assets;
-	
+
+	public AssignedAssets(Long eid,String aname) {} 
 }
