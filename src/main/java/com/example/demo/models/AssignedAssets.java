@@ -71,6 +71,12 @@ public class AssignedAssets {
 	private String assigned;
 	
 	@Transient
+	private String assigned_types;
+	
+	@Transient
+	private String model_numbers;
+	
+	@Transient
 	private Long asset_id;
 	
 	@Transient

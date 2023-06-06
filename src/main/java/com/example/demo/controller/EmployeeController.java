@@ -150,9 +150,6 @@ public class EmployeeController {
 	public String viewAssignedAssets(Model model)
 	{
 		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
-		
-		List<AssignedAssets> nlist = null;
-		
 		model.addAttribute("aslist", aslist);
 		return "ViewAssignedAssets";
 	}
@@ -170,8 +167,9 @@ public class EmployeeController {
 			aslist.forEach(ast->{
 					AssignedAssets asts = new AssignedAssets();
 					
-					asts.setAssigned(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()).toString());
-					asts.setAss_assets(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()));
+					String assets= "",asset_type="";
+					
+//					asts.setAss_assets(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()));
 					
 					asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
 					asts.setAssign_date(ast[1].toString());
@@ -179,7 +177,20 @@ public class EmployeeController {
 					asts.setAsset_id(Long.valueOf(ast[3].toString()));
 					asts.setEmp_id((Long.valueOf(ast[4].toString())));
 					
-					asts.setAssigned_asset_types(Stream.of(ast[6].toString().split(",")).collect(Collectors.toList()));
+					assets = Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()).toString();
+					
+					assets = assets.replace("[", "");
+					assets = assets.replace("]", "");
+					
+					asts.setAssigned(assets);
+					
+					asset_type = Stream.of(ast[6].toString().split(",")).collect(Collectors.toList()).toString();
+					asset_type = asset_type.replace("[", "");
+					asset_type = asset_type.replace("]", "");
+					
+					
+					asts.setAssigned_types(asset_type);
+					//asts.setAssigned_asset_types(asset_type);
 					
 					Employee emp = new Employee();
 					
@@ -199,6 +210,13 @@ public class EmployeeController {
 					comp.setComp_id((Long.valueOf(ast[14].toString())));
 					comp.setComp_name(ast[15].toString());
 					
+					String mod_num = "";
+					
+					mod_num = Stream.of(ast[16].toString().split(",")).collect(Collectors.toList()).toString();
+					mod_num = mod_num.replace("[", "");
+					mod_num = mod_num.replace("]", "");
+					
+					asts.setModel_numbers(mod_num);
 					dept.setCompany(comp);
 					
 					emp.setDepartment(dept);
@@ -207,14 +225,13 @@ public class EmployeeController {
 				
 					alist.add(asts);
 			});
-			//alist.stream().forEach(e->System.err.println(e.getEmployee().getEmp_name()+" ->>  "+ e.getAss_assets()));
 			
 			for(int i=0;i<alist.size();i++)
 			{
-				System.err.println(alist.get(i).getEmployee().getEmp_name()+" --->>> "+alist.get(i).getAss_assets()+" ->> "+alist.get(i).getAssign_date());
+				System.err.println(alist.get(i).getEmployee().getEmp_name()+" --->>> "+alist.get(i).getAssigned()+" ->> "+alist.get(i).getAssign_date());
 			}
 			
-			model.addAttribute("aslist", aslist);
+			model.addAttribute("aslist", alist);
 			return "ViewAssignedAssets";
 		}
 		else {
