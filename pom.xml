@@ -15,7 +15,7 @@
 	<name>newassetmanagementWithJPA</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>1.8</java.version>
 		<start-class>com.example.demo.NewassetmanagementWithJpaApplication</start-class>
 	</properties>
 	<dependencies>
