@@ -1,12 +1,18 @@
 package com.example.demo.controller;
 
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.exporttoexcel.ExportAssignedAssets;
 import com.example.demo.models.AssetAssignHistory;
 import com.example.demo.models.AssetType;
 import com.example.demo.models.Assets;
@@ -146,17 +153,8 @@ public class EmployeeController {
 	}
 	
 	
-	@GetMapping("/viewassignedassets")
-	public String viewAssignedAssets(Model model)
-	{
-		List<AssignedAssets> aslist = assignserv.getAllAssignedAssets();
-		model.addAttribute("aslist", aslist);
-		return "ViewAssignedAssets";
-	}
-	
-	
 	//This method returns the assigned assets in single column 
-	@GetMapping("/viewgroupassets")
+	@GetMapping("/viewassignedassets")
 	public String viewAllAssignedAssets(Model model)
 	{
 		List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
@@ -168,8 +166,6 @@ public class EmployeeController {
 					AssignedAssets asts = new AssignedAssets();
 					
 					String assets= "",asset_type="";
-					
-//					asts.setAss_assets(Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()));
 					
 					asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
 					asts.setAssign_date(ast[1].toString());
@@ -188,9 +184,7 @@ public class EmployeeController {
 					asset_type = asset_type.replace("[", "");
 					asset_type = asset_type.replace("]", "");
 					
-					
 					asts.setAssigned_types(asset_type);
-					//asts.setAssigned_asset_types(asset_type);
 					
 					Employee emp = new Employee();
 					
@@ -225,17 +219,12 @@ public class EmployeeController {
 				
 					alist.add(asts);
 			});
-			
-			for(int i=0;i<alist.size();i++)
-			{
-				System.err.println(alist.get(i).getEmployee().getEmp_name()+" --->>> "+alist.get(i).getAssigned()+" ->> "+alist.get(i).getAssign_date());
-			}
-			
+		
 			model.addAttribute("aslist", alist);
 			return "ViewAssignedAssets";
 		}
 		else {
-			return "redirect:/viewallemployees";
+				return "redirect:/viewallemployees";
 		}
 	}
 	
@@ -361,5 +350,81 @@ public class EmployeeController {
 		}
 	}
 	
-	
+	 @GetMapping("/users/export/excel")
+	    public void exportToExcel(HttpServletResponse response) throws IOException {
+	        response.setContentType("application/octet-stream");
+	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	        String currentDateTime = dateFormatter.format(new Date());
+	         
+	        String headerKey = "Content-Disposition";
+	        String headerValue = "attachment; filename=Assigned_Assets_" + currentDateTime + ".xlsx";
+	        response.setHeader(headerKey, headerValue);
+	         
+	        List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
+			List<Object[]>  aslist = assignserv.getAllAssignedassetsGroup();
+			
+			if(aslist.size() >0)
+			{
+				aslist.forEach(ast->{
+						AssignedAssets asts = new AssignedAssets();
+						
+						String assets= "",asset_type="";
+						
+						asts.setAssigned_asset_id(Long.valueOf(ast[0].toString()));
+						asts.setAssign_date(ast[1].toString());
+						asts.setAssign_time(ast[2].toString());
+						asts.setAsset_id(Long.valueOf(ast[3].toString()));
+						asts.setEmp_id((Long.valueOf(ast[4].toString())));
+						
+						assets = Stream.of(ast[5].toString().split(",")).collect(Collectors.toList()).toString();
+						
+						assets = assets.replace("[", "");
+						assets = assets.replace("]", "");
+						
+						asts.setAssigned(assets);
+						
+						asset_type = Stream.of(ast[6].toString().split(",")).collect(Collectors.toList()).toString();
+						asset_type = asset_type.replace("[", "");
+						asset_type = asset_type.replace("]", "");
+						
+						asts.setAssigned_types(asset_type);
+						
+						Employee emp = new Employee();
+						
+						emp.setEmp_name(ast[7].toString());
+						emp.setEmp_email(ast[8].toString());
+						emp.setEmp_contact(ast[9].toString());
+						
+						Designation desig = new Designation();
+						desig.setDesig_id((Long.valueOf(ast[10].toString())));
+						desig.setDesig_name(ast[11].toString());
+
+						Department dept = new Department();
+						dept.setDept_id((Long.valueOf(ast[12].toString())));
+						dept.setDept_name(ast[13].toString());
+						
+						Company comp = new Company();
+						comp.setComp_id((Long.valueOf(ast[14].toString())));
+						comp.setComp_name(ast[15].toString());
+						
+						String mod_num = "";
+						
+						mod_num = Stream.of(ast[16].toString().split(",")).collect(Collectors.toList()).toString();
+						mod_num = mod_num.replace("[", "");
+						mod_num = mod_num.replace("]", "");
+						
+						asts.setModel_numbers(mod_num);
+						dept.setCompany(comp);
+						
+						emp.setDepartment(dept);
+						emp.setDesignation(desig);
+						asts.setEmployee(emp);
+					
+						alist.add(asts);
+				});
+			}
+	        ExportAssignedAssets excelExporter = new ExportAssignedAssets(alist);
+	         
+	        excelExporter.export(response);    
+	    }  
 }
