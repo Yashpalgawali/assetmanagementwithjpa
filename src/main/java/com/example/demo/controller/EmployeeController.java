@@ -350,14 +350,14 @@ public class EmployeeController {
 		}
 	}
 	
-	 @GetMapping("/users/export/excel")
+		@RequestMapping("/exportassignedassets/excel")
 	    public void exportToExcel(HttpServletResponse response) throws IOException {
 	        response.setContentType("application/octet-stream");
 	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
 	        String currentDateTime = dateFormatter.format(new Date());
 	         
 	        String headerKey = "Content-Disposition";
-	        String headerValue = "attachment; filename=Assigned_Assets_" + currentDateTime + ".xlsx";
+	        String headerValue = "attachment; filename=Assigned_Assets_" + currentDateTime + ".xls";
 	        response.setHeader(headerKey, headerValue);
 	         
 	        List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
@@ -409,7 +409,7 @@ public class EmployeeController {
 						
 						String mod_num = "";
 						
-						mod_num = Stream.of(ast[16].toString().split(",")).collect(Collectors.toList()).toString();
+						mod_num = Stream.of(ast[16].toString().split(",")).collect(Collectors.toList()).toString().replace("[", "").replace("]", "");
 						mod_num = mod_num.replace("[", "");
 						mod_num = mod_num.replace("]", "");
 						

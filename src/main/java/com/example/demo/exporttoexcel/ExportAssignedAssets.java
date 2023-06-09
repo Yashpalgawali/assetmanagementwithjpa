@@ -32,13 +32,16 @@ public class ExportAssignedAssets {
 	
 	private void writeHeaderLine()
 	{
+		
+		System.err.println("Inside writeHeaderLine() \n");
+	
 		sheet = workbook.createSheet("AssignedAssets");
 		Row row = sheet.createRow(0);
 		
 		CellStyle style = workbook.createCellStyle();
 		XSSFFont font = workbook.createFont();
 		font.setBold(true);
-		font.setFontHeight(16);
+		font.setFontHeight(12);
 		
 		style.setFont(font);
 	
@@ -59,7 +62,11 @@ public class ExportAssignedAssets {
 	            cell.setCellValue((Integer) value);
 	        } else if (value instanceof Boolean) {
 	            cell.setCellValue((Boolean) value);
-	        }else {
+	        }
+	        else if (value instanceof Long) {
+	            cell.setCellValue((Long) value);
+	        }
+	        else {
 	            cell.setCellValue((String) value);
 	        }
 	        cell.setCellStyle(style);
@@ -72,14 +79,14 @@ public class ExportAssignedAssets {
 		XSSFFont font = workbook.createFont();
 		font.setBold(true);
 		font.setFontHeight(16);
-		
+		int sr=1;
 		for(AssignedAssets asset : assignedAssets)
 		{
 			Row row = sheet.createRow(rowCount++);
 			
 			int columnCount = 0;
 			
-			createCell(row,columnCount++, asset.getAssigned_asset_id(),style);
+			createCell(row,columnCount++, sr++ ,style);
 			createCell(row,columnCount++, asset.getEmployee().getEmp_name() ,style);
 			createCell(row,columnCount++, asset.getAssigned() ,style);
 			createCell(row,columnCount++, asset.getAssigned_types() ,style);
