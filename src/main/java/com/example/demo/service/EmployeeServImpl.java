@@ -230,13 +230,8 @@ public class EmployeeServImpl implements EmployeeService {
 		//If Assets to be assigned are greater than the Already assigned assets
 		if(nw_assets.length>ol_assets.length)
 		{
-			//System.err.println("New assets length is greater than Old ");
 			List<String> olist= List.of(ol_assets);
-			
 			List<String> nlist= List.of(nw_assets);
-			
-			//System.err.println("\n Old assets list is -->> "+olist.toString()+"\n New Assets list is --->>> "+nlist.toString()+"\n");
-			
 			for(int i=0;i<nw_assets.length;i++)
 			{
 				if(olist.contains(nw_assets[i]))
