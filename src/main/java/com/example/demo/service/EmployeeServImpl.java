@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,9 +116,11 @@ public class EmployeeServImpl implements EmployeeService {
 		
 		if(ol_assets.length==nw_assets.length)
 		{
-			List<String> olist= List.of(ol_assets);
+			//List<String> olist= List.of(ol_assets);
+			//List<String> nlist= List.of(nw_assets);
 			
-			List<String> nlist= List.of(nw_assets);
+			List<String> olist= Arrays.asList(ol_assets);
+			List<String> nlist= Stream.of(new_assets.split(",")).collect(Collectors.toList());
 			
 			for(int i=0;i<ol_assets.length;i++)
 			{
@@ -230,8 +234,11 @@ public class EmployeeServImpl implements EmployeeService {
 		//If Assets to be assigned are greater than the Already assigned assets
 		if(nw_assets.length>ol_assets.length)
 		{
-			List<String> olist= List.of(ol_assets);
-			List<String> nlist= List.of(nw_assets);
+//			List<String> olist= List.of(ol_assets);
+//			List<String> nlist= List.of(nw_assets);
+			List<String> olist= Arrays.asList(ol_assets);
+			List<String> nlist= Stream.of(new_assets.split(",")).collect(Collectors.toList());
+			
 			for(int i=0;i<nw_assets.length;i++)
 			{
 				if(olist.contains(nw_assets[i]))
@@ -296,9 +303,11 @@ public class EmployeeServImpl implements EmployeeService {
 		//If Assets to be assigned are smaller than the Already assigned assets
 		if(nw_assets.length<ol_assets.length)
 		{
-			List<String> olist= List.of(ol_assets);
-			
-			List<String> nlist= List.of(nw_assets);
+//			List<String> olist= List.of(ol_assets);
+//          List<String> nlist= List.of(nw_assets);
+            
+			List<String> olist= Arrays.asList(ol_assets);
+			List<String> nlist= Stream.of(new_assets.split(",")).collect(Collectors.toList());
 			for(int i=0;i<ol_assets.length;i++)
 			{
 				if(nlist.contains(ol_assets[i]))
