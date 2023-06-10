@@ -32,9 +32,6 @@ public class ExportAssignedAssets {
 	
 	private void writeHeaderLine()
 	{
-		
-		System.err.println("Inside writeHeaderLine() \n");
-	
 		sheet = workbook.createSheet("AssignedAssets");
 		Row row = sheet.createRow(0);
 		
@@ -50,8 +47,12 @@ public class ExportAssignedAssets {
 		createCell(row,2,"Assets",style);
 		createCell(row,3,"Asset Type",style);
 		createCell(row,4,"Model",style);
-		createCell(row,5,"Email",style);
+		createCell(row,5,"Assign Date",style);
+		createCell(row,6,"Assign Time",style);
 		
+		createCell(row,7,"Email",style);
+		createCell(row,8,"Department",style);
+		createCell(row,9,"Company",style);
 	}
 	
 	private void createCell(Row row,int columnCount,Object value,CellStyle style)
@@ -91,7 +92,11 @@ public class ExportAssignedAssets {
 			createCell(row,columnCount++, asset.getAssigned() ,style);
 			createCell(row,columnCount++, asset.getAssigned_types() ,style);
 			createCell(row,columnCount++, asset.getModel_numbers() ,style);
+			createCell(row,columnCount++, asset.getAssign_date() ,style);
+			createCell(row,columnCount++, asset.getAssign_time() ,style);
 			createCell(row,columnCount++, asset.getEmployee().getEmp_email() ,style);
+			createCell(row, columnCount++, asset.getEmployee().getDepartment().getDept_name(), style);
+			createCell(row, columnCount++, asset.getEmployee().getDepartment().getCompany().getComp_name(), style);
 		}
 	}
 	
