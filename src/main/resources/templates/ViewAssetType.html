@@ -49,26 +49,22 @@
 		<div th:if="${response}">
 			<h6 class="alert alert-success" th:text="${response}"></h6>
 		</div>
-		
 		<div th:if="${reserr}">
 			<h6 class="alert alert-danger" th:text="${reserr}"></h6>
 		</div>
 		<!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
-				
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						
-						<a th:href="@{/adminhome}">
+						<a th:href="@{/}">
 							<i class="fa fa-home"></i>&nbsp;Home
 						</a>
 					</li>
 					<li class="breadcrumb-item active" aria-current="page">
-						Add Asset Type
+						View Asset Type
 					</li>
-					
 				</ol>
 			</div>
 		</div>
@@ -99,5 +95,6 @@
 	  </div>
 	</div>
   </div>
+  <div th:replace="fragments/Footer.html :: footer"></div>	
 </body>
 </html>

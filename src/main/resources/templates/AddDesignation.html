@@ -33,39 +33,32 @@
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						
-						<a th:href="@{/adminhome}">
+						<a th:href="@{/}">
 							<i class="fa fa-home"></i>&nbsp;Home
 						</a>
 					</li>
 					<li class="breadcrumb-item active" aria-current="page">
-						View Designation
+						Add Designation
 					</li>
-					
 				</ol>
 			</div>
 		</div>	
 		<form th:action="@{savedesignation}" method="post" > 
 			 <div class="card">
-		
 				<div class="card-header">
 					<h4>Add Designation</h4>
 				</div>
-				
 				<div class="card-body">
-				
 				<div class="form-group">
 				  <label for="desig_name">Designation </label>
 					<input class="form-control" type="text" id="desig_name" name="desig_name" placeholder="Enter Designation Name" required/>
 				</div>
-				
-						<input type="submit" class="btn btn-primary" value="Submit"/>
-						<input type="reset" class="btn btn-primary" value="RESET"/>
+					<input type="submit" class="btn btn-primary" value="Submit"/>
+					<input type="reset" class="btn btn-primary" value="RESET"/>
 				</div>	
 			</div>	
 		</form>
-			
 	</div>
-		
+	<div th:replace="fragments/Footer.html :: footer"></div>		
 </body>
 </html>

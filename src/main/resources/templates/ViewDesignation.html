@@ -52,7 +52,7 @@
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
 						
-						<a th:href="@{/adminhome}">
+						<a th:href="@{/}">
 							<i class="fa fa-home"></i>&nbsp;Home
 						</a>
 					</li>
@@ -78,7 +78,6 @@
 			</div>
 			
 		<div class="card-body">
-			
 			<div class="table-responsive-sm" >
 				<table  class="table table-striped  table-hover table-full-width dt-responsive nowrap"
 						style="width: 100%;" id="desigtable">
@@ -104,11 +103,7 @@
 		  </div>
 		</div>
 	  </div>
-<!-- 	</div> -->
-	
-	<div th:replace="fragments/Footer.html :: footer">
-	
-	</div>
+	<div th:replace="fragments/Footer.html :: footer"></div>
 	
   </body>
 </html>
