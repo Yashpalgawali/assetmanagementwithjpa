@@ -44,8 +44,9 @@ public class ExportAssetAssignHistory {
 		createCell(row,2,"Asset Type",style);
 		createCell(row,3,"Model Number",style);
 		createCell(row,4,"Date",style);
-		createCell(row,5,"Operation",style);
-		createCell(row,6,"Employee",style);
+		createCell(row,5,"Time",style);
+		createCell(row,6,"Operation",style);
+		createCell(row,7,"Employee",style);
 		
 	}
 	
@@ -87,6 +88,7 @@ public class ExportAssetAssignHistory {
 			createCell(row,columnCount++, hist.getAsset().getAtype().getType_name() ,style);
 			createCell(row,columnCount++, hist.getAsset().getModel_number() ,style);
 			createCell(row,columnCount++, hist.getOperation_date() ,style);
+			createCell(row,columnCount++, hist.getOperation_time() ,style);
 			createCell(row,columnCount++, hist.getOperation() ,style);
 			if(cn==1)
 			{
