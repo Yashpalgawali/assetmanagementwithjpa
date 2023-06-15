@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,10 +43,10 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/viewcompanies")
+	@Cacheable(value = "viewcompanies")
 	public String viewCompany(Model model)
 	{
 			List<Company> clist = compserv.getAllCompanies();
-		
 			model.addAttribute("clist", clist);
 			return "ViewCompanies";
 		

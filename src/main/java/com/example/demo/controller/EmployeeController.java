@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.demo.exporttoexcel.ExportAssetAssignHistory;
 import com.example.demo.exporttoexcel.ExportAssignedAssets;
 import com.example.demo.models.AssetAssignHistory;
 import com.example.demo.models.AssetType;
@@ -426,5 +427,23 @@ public class EmployeeController {
 	        ExportAssignedAssets excelExporter = new ExportAssignedAssets(alist);
 	         
 	        excelExporter.export(response);    
-	    }  
+	    } 
+		
+		
+		
+		@RequestMapping("/exportassignshistory/excel/{id}")
+	    public void exportToExcel(HttpServletResponse response,@PathVariable("id")Long empid ) throws IOException {
+	        response.setContentType("application/octet-stream");
+	        DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+	        String currentDateTime = dateFormatter.format(new Date());
+	         
+	        String headerKey = "Content-Disposition";
+	        String headerValue = "attachment; filename=Assigned_Assets_History" + currentDateTime + ".xls";
+	        response.setHeader(headerKey, headerValue);
+	         
+	        List<AssetAssignHistory> alist = ahistserv.getAssetAssignHistoryByEmpId(""+empid);
+	        
+	        ExportAssetAssignHistory ahist = new ExportAssetAssignHistory(alist);
+	        ahist.export(response);
+		}
 }
