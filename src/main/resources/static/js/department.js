@@ -3,6 +3,5 @@
  */
  $(document).ready(function(){
 	
-	$('#depttable').DataTable();	
-	
+	$('#depttable').DataTable();
  }); 
