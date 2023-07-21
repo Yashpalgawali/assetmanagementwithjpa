@@ -10,7 +10,6 @@
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
 <link rel="stylesheet"	href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet"	href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
-
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" />
 <link th:href="@{/css/main.css}" rel="stylesheet">
 <script>
@@ -22,46 +21,30 @@
 						 });
 			})
 </script>
-
 </head>
 <body>
-
 	<div th:include="fragments/header.html :: header"></div>
-
 	<div class="container">
-		<div th:if="${response}">
-			<h6 class="alert alert-success" th:text="${response}"></h6>
-		</div>
-
-		<div th:if="${reserr}">
-			<h6 class="alert alert-danger" th:text="${reserr}"></h6>
-		</div>
+		<div th:if="${response}"><h6 class="alert alert-success" th:text="${response}"></h6></div>
+		<div th:if="${reserr}"><h6 class="alert alert-danger" th:text="${reserr}"></h6></div>
 		<!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/}"> <i
-							class="fa fa-home"></i>&nbsp;Home
-					</a></li>
-					<li class="breadcrumb-item active" aria-current="page">View
-						Assigned Assets</li>
+					<li class="breadcrumb-item"><a th:href="@{/}"> <i class="fa fa-home"></i>&nbsp;Home</a></li>
+					<li class="breadcrumb-item active" aria-current="page">View Assigned Assets</li>
 				</ol>
 			</div>
 		</div>
-		<div class="card">
-			<div class="card-header">
+		<div class="card-header">
 				<h4>View Assigned Assets
 					<a th:href="@{/exportassignedassets/excel}" class="btn btn-primary" style="float:right;">Export to Excel</a>
 				</h4>
-			</div>
-
+		</div>
 			<div class="card-body">
-				
 				<div class="table-responsive-sm">
-					<table
-						class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap"
-						style="width: 100%" id="comptable">
+					<table class="table table-striped table-bordered table-hover table-full-width dt-responsive nowrap" style="width: 100%" id="comptable">
 						<thead>
 							<tr>
 								<th>Sr No.</th>
@@ -95,7 +78,6 @@
 					</table>
 				</div>
 			</div>
-		</div>
 	</div>
 
 <div th:replace="fragments/Footer.html :: footer"></div>
