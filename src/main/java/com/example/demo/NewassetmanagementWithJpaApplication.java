@@ -5,10 +5,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NewassetmanagementWithJpaApplication {
+public class NewassetmanagementWithJpaApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NewassetmanagementWithJpaApplication.class, args);
 		
 	}
+
 }
