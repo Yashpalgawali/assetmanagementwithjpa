@@ -10,7 +10,7 @@
 		
 		$.ajax({
 //				url		:	'/getdeptbycompid/'+cid,
-				url		:	b_url+'/'+appname+'/getdeptbycompid/'+cid,
+				url		:	'/'+appname+'/getdeptbycompid/'+cid,
 				type	:	'GET',
 				dataType:	'JSON',
 				success : 	function(result)
