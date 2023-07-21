@@ -5,7 +5,6 @@
 	{
 		$('#department').empty();
 		$('#department').append("<option selected disabled>Please Select Department</option>");
-		let b_url = $('#base_url').val();
 		let appname = $('#appname').val();
 		
 		$.ajax({
