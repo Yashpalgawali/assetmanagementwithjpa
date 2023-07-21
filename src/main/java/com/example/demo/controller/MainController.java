@@ -20,14 +20,14 @@ public class MainController {
 	@GetMapping("/")
 	public String home(HttpSession sess,HttpServletRequest request)
 	{
-//		String base_url =	ServletUriComponentsBuilder
-//				.fromRequestUri(request)
-//				.replacePath(null)
-//				.build()
-//				.toUriString();
-//		
-//		sess.setAttribute("base_url", base_url);
-//		sess.setAttribute("appname", env.getProperty("spring.application.name"));
+		String base_url =	ServletUriComponentsBuilder
+				.fromRequestUri(request)
+				.replacePath(null)
+				.build()
+				.toUriString();
+		
+		sess.setAttribute("base_url", base_url);
+		sess.setAttribute("appname", env.getProperty("spring.application.name"));
 		return "Home";
 	}
 	
