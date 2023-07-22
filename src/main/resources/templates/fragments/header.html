@@ -10,7 +10,7 @@
 	<nav class="navbar navbar-expand-md navbar-light bg-light  fixed-top ">
 <!--   <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/savera_logo.jpg}" id="c_logo" ></a> -->
 	  
-	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" >
 		<span class="navbar-toggler-icon"></span>
 	  </button>
 	  
@@ -66,6 +66,15 @@
       	 <ul class="dropdown-menu">
       	 	<li><a class="dropdown-item" th:href="@{/adddesignation}">Add Designation</a></li>
       	 	 <li><a class="dropdown-item" th:href="@{/viewdesignation}">View Designation</a></li>
+      	 </ul>
+      </li>
+       <li class="nav-item dropdown">
+      	<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Welcome&nbsp;[[${#authentication.getPrincipal().getUsername()}]]</a>
+      	 <ul class="dropdown-menu">
+      	 <li><a class="dropdown-item" th:href="@{/changepass}"><i class="fas fa-cog"></i>&nbsp;Change Password</a></li>
+      	 <hr>
+      	 	<li><a class="dropdown-item" th:href="@{/logout}"><i class="fas fa-power-off"></i>&nbsp;Logout</a></li>
+      	 
       	 </ul>
       </li>
      </ul>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link href="#" rel="shortcut icon">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+	<link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" />
+	<link th:href="@{/css/main.css}" rel="stylesheet">
+	<link th:href="@{/css/login.css}" rel="stylesheet">
+<title>Asset Management</title>
+
+</head>
+<body>
+
+<div class="container" >
+ 
+    <div class="row">
+	
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
+          <div class="card-body p-4 p-sm-5">
+            <h4 class="card-title text-center mb-5 fw-light fs-5"><i class='fas fa-sign-out-alt'></i>&nbsp;Sign In</h4>
+          	
+			<hr class="my-4">
+		  
+			<form action="login" method="POST">
+              <div class="form-floating mb-3">
+			   <label for="floatingInput"><strong>Username</strong></label>
+                <input type="text" class="form-control" id="floatingInput" name="username" placeholder="Enter your username" required>
+               
+              </div>
+              <div class="form-floating mb-3">
+			  <label for="floatingPassword"><strong>Password</strong></label>
+                <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Enter Password" autocomplete="on" required>
+              </div>
+			  <!--<div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" value="" id="rememberPasswordCheck">
+                <label class="form-check-label" for="rememberPasswordCheck">
+                  Remember password
+                </label>
+              </div> -->
+              <div class="d-grid">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">Sign in</button>
+              </div>
+			  <div class="form-floating mb-3"><a th:href="@{/forgotpass}">Forgot Password. Click Here to Recover </a></div>
+              <hr class="my-4">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:replace="fragments/Footer.html ::footer" ></div>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
