@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta name="viewport" content="width=device-width , initial-scale=1">
+</head>
+
+<body>
+<header th:fragment="header" >
+	<nav class="navbar navbar-expand-md navbar-light bg-light  fixed-top ">
+<!--   <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/savera_logo.jpg}" id="c_logo" ></a> -->
+	  
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar" >
+		<span class="navbar-toggler-icon"></span>
+	  </button>
+	  
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a class="nav-link active" th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home</a></li>
+      <li class="nav-item"><a class="nav-link active" th:href="@{/login}">Login</a></li>
+      
+     </ul>
+  </div>
+ </nav>
+</header>
+</body>
+</html>

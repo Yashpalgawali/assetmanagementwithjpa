@@ -65,18 +65,22 @@ public class MainController {
 	
 	@GetMapping("/forgotpass")
 	public String forgotPassword(){
-		return "ForgotPassword";
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth.getName().equals("admin")){
+			return "redirect:/changepass";
+		}
+		else {
+			return "ForgotPassword";
+		}
 	}
 	
 	@RequestMapping("/forgotpassword")
 	public String forGotPassword(@ModelAttribute("Users") Users users,HttpSession sess ,RedirectAttributes attr)
 	{
 		Users user = userserv.getUserByEmailId(users.getEmail());
-		if(user!=null)
-		{
+		if(user!=null){
 			otpserv.generateotp(users.getEmail());
 			int otp = otpserv.getOtp(users.getEmail());
-			
 			sess.setAttribute("vemail", users.getEmail());
 			sess.setAttribute("otp", otp);
 			sess.setAttribute("userid", user.getUser_id());
@@ -100,7 +104,6 @@ public class MainController {
 	@PostMapping("/confotppassword")
 	public String confirmOtpPassword(@ModelAttribute("Users") Users users, HttpSession sess,RedirectAttributes attr)
 	{
-		//Users user = userserv.getUserByEmailId((String)sess.getAttribute("vemail"));
 		Integer n_otp = Integer.parseInt(users.getCnf_otp());
 		int  new_otp = n_otp;
 		Integer o_otp = (Integer) sess.getAttribute("otp");;
@@ -142,6 +145,8 @@ public class MainController {
 		if(res>0)
 		{
 			if(auth.getName().equals("admin")) {
+				sess.removeAttribute("vemail");
+				sess.removeAttribute("userid");
 				attr.addFlashAttribute("response", "Password updated successfully");
 				return "redirect:/";
 			}
