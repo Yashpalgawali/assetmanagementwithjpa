@@ -144,7 +144,7 @@ public class MainController {
 		}
 		else{
 			if(auth.getName().equals("admin")) {
-				attr.addFlashAttribute("response", "Password updated successfully");
+				attr.addFlashAttribute("reserr", "Password is not updated ");
 				return "redirect:/changepass";
 			}
 			else {
