@@ -13,7 +13,7 @@ import com.example.demo.models.Users;
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
 	
-	@Query("UPDATE  Users u SET u.password=?1 WHERE u.user_id=?2")
+	@Query("UPDATE  Users u SET u.password=:pass WHERE u.user_id=:id")
 	@Transactional
 	@Modifying
 	public int updateUsersPassword(String pass,Long id);

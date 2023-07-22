@@ -127,7 +127,15 @@ public class MainController {
 	public String updatePassword(@ModelAttribute("Users")Users users,HttpSession sess,RedirectAttributes attr){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String enpass = passcode.encode(users.getCnf_pass());
-		Long uid = (Long) sess.getAttribute("userid");
+		Long uid =0L;
+		if(sess.getAttribute("userid")!=null)
+		{
+			uid = (Long) sess.getAttribute("userid");
+		}
+		else {
+			Users user = userserv.getUserByUserName(auth.getName());
+			uid = user.getUser_id();
+		}	
 		
 		int res = userserv.updateUsersPassword(enpass, uid);
 		

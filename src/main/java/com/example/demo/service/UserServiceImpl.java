@@ -16,6 +16,7 @@ public class UserServiceImpl implements UserService {
 	public int updateUsersPassword(String pass, Long id) {
 		// TODO Auto-generated method stub
 		
+		System.err.println("Inside updateUserpassword service \n Password is "+pass+" \n ID is "+id);
 		return userrepo.updateUsersPassword(pass, id);
 	}
 
