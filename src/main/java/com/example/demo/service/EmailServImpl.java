@@ -27,17 +27,13 @@ public class EmailServImpl implements EmailService {
 		message.setFrom(from);
 		message.setSubject(subject);
 		message.setText(body);
-		
-		System.err.println("Inside send mail method \n Mail is \n"+message.toString());
 		try {
 			mailsend.send(message);
 			System.out.println("mail sent success");
 		}
-		catch(Exception e)
-		{
-			System.err.println("mail sent failed");
+		catch(Exception e){
+			e.printStackTrace();
+			System.err.println("mail sent failed ");
 		}
-		
 	}
-
 }

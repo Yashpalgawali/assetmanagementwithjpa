@@ -11,12 +11,10 @@ public class NewassetmanagementWithJpaApplication  {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NewassetmanagementWithJpaApplication.class, args);
-		
 	}
 	
 	@Bean
-	public BCryptPasswordEncoder passEncode()
-	{
+	public BCryptPasswordEncoder passEncode(){
 		return new BCryptPasswordEncoder();  
 	}
 }

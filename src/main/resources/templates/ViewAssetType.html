@@ -4,97 +4,65 @@
 <meta charset="ISO-8859-1">
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <link href="#" rel="shortcut icon">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-	
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-	
-	<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-
-<link th:href="@{/css/main.css}" rel="stylesheet">
-
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
-<script	src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
-<script	src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
 <link rel="stylesheet"	href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap4.min.css" />
 <link rel="stylesheet"	href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap4.min.css" />
-
 <link rel="stylesheet"	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.2/css/all.min.css" />
-  
-  
+<link th:href="@{/css/main.css}" rel="stylesheet">  
 <title>View Asset Type</title>
-
-<script>
-
-	$(document).ready(function(){
-		
-		$('#assettable').DataTable();
-		
-	});
-</script>
-
+<script>$(document).ready(function(){$('#assettable').DataTable();});</script>
 </head>
 <body>
-		
-	<div th:include="fragments/header.html :: header">
-	</div>	
-		
+	<div th:include="fragments/header.html :: header"></div>	
 	<div class="container">
-		
-		<div th:if="${response}">
-			<h6 class="alert alert-success" th:text="${response}"></h6>
-		</div>
-		<div th:if="${reserr}">
-			<h6 class="alert alert-danger" th:text="${reserr}"></h6>
-		</div>
+	<div th:if="${response}"><h6 class="alert alert-success" th:text="${response}"></h6></div>
+	<div th:if="${reserr}"><h6 class="alert alert-danger" th:text="${reserr}"></h6></div>
 		<!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item">
-						<a th:href="@{/}">
-							<i class="fa fa-home"></i>&nbsp;Home
-						</a>
+						<a th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home</a>
 					</li>
-					<li class="breadcrumb-item active" aria-current="page">
-						View Asset Type
-					</li>
+					<li class="breadcrumb-item active" aria-current="page">View Asset Type</li>
 				</ol>
 			</div>
 		</div>
-		
 		<div class="card-header">
-			<h4>Asset Type List
-				<a th:href="@{/addassettype}" style="float:right;" class="btn btn-primary mb-3">Add Asset Type</a>
-			</h4>
+			<h4>Asset Type List<a th:href="@{/addassettype}" style="float:right;" class="btn btn-primary mb-3">Add Asset Type</a></h4>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive-sm" >
-		<table class="table table-striped table-hover" id="assettable">
-		    <thead>
-                   <tr>
-                       <th>Sr</th>
-                       <th>Asset Type</th>
-                       <th>Edit</th>
-                   </tr>
-               </thead>
-               <tbody>
-                   <tr th:each="type : ${atype}">
-                       <td th:text="${typeStat.count}"></td>
-                       <td th:text="${type.type_name}"></td>
-                       <td><a th:href="@{/editassettype/{id}(id=${type.type_id})}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></td>
-                   </tr>
-               </tbody>
-		</table>
+			<table class="table table-striped table-hover" id="assettable">
+			    <thead>
+	                   <tr>
+	                       <th>Sr</th>
+	                       <th>Asset Type</th>
+	                       <th>Edit</th>
+	                   </tr>
+	               </thead>
+	               <tbody>
+	                   <tr th:each="type : ${atype}">
+	                       <td th:text="${typeStat.count}"></td>
+	                       <td th:text="${type.type_name}"></td>
+	                       <td><a th:href="@{/editassettype/{id}(id=${type.type_id})}" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</a></td>
+	                   </tr>
+	               </tbody>
+			</table>
 	  </div>
 	</div>
   </div>
-  <div th:replace="fragments/Footer.html :: footer"></div>	
+  <div th:replace="fragments/Footer.html :: footer"></div>
+  <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>	
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js"></script>
+<script	src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+<script	src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap4.min.js"></script>
+  	
 </body>
 </html>

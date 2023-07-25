@@ -54,6 +54,9 @@ public class MainController {
 		
 		sess.setAttribute("base_url", base_url);
 		sess.setAttribute("appname", env.getProperty("spring.application.name"));
+		
+		emailserv.sendSimpleEmail("crankyash@gmail.com", "Test mail", "testing");
+		
 		return "Home";
 	}
 	

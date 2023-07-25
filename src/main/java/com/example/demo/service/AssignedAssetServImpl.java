@@ -44,8 +44,7 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	public int retrieveAssetByEmpId(AssignedAssets assign) {
 		// TODO Auto-generated method stub
 		String asset_ids = assign.getMulti_assets();
-		char[] chararr =  asset_ids.toCharArray();
-
+		
 		String[] strarr	=   asset_ids.split(",");
 				
 		int res = 0;
@@ -58,24 +57,9 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 			int asset_qty = assetrepo.getQuantiyByAssetId(asid);
 			asset_qty +=1;
 			
-			int asres = assetrepo.updateAssetQuantityByAssetId(asid, ""+asset_qty);
+			assetrepo.updateAssetQuantityByAssetId(asid, ""+asset_qty);
 		}
 		
-//		for(int i=0;i<chararr.length;i++)
-//		{
-//			if(Character.isDigit(chararr[i]))
-//			{
-//				Long asid = (long)Character.getNumericValue(chararr[i]);
-//				
-//				res  = assignassetrepo.deleteAssignedAssetByEmpidAssetId(asid, assign.getEmp_id());
-//				 
-//				int asset_qty = assetrepo.getQuantiyByAssetId(asid);
-//				asset_qty +=1;
-//				
-//				int asres = assetrepo.updateAssetQuantityByAssetId(asid, ""+asset_qty);
-//				
-//			}
-//		}
 		return res;
 	}
 
