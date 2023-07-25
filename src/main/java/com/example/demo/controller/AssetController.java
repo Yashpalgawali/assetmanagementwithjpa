@@ -127,9 +127,7 @@ public class AssetController {
 	public String editAssetByIs(@PathVariable("id") String id,Model model, RedirectAttributes attr)
 	{
 		Assets asset = assetserv.getAssetsById(id);
-		
-		if(asset!=null)
-		{
+		if(asset!=null){
 			model.addAttribute("atype", atypeserv.getAllAssetTypes());
 			model.addAttribute("asset", asset);
 			return "EditAsset";
@@ -144,8 +142,7 @@ public class AssetController {
 	public String updateAsset(@ModelAttribute("Assets")Assets ast,RedirectAttributes attr)
 	{
 		int res = assetserv.updateAssets(ast);
-		if(res > 0)
-		{
+		if(res > 0){
 			attr.addFlashAttribute("response", "Asset  is updated successfully");
 			return "redirect:/viewassets";
 		}

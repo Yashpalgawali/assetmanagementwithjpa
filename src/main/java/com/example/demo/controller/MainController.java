@@ -51,18 +51,13 @@ public class MainController {
 				.replacePath(null)
 				.build()
 				.toUriString();
-		
 		sess.setAttribute("base_url", base_url);
 		sess.setAttribute("appname", env.getProperty("spring.application.name"));
-		
-		emailserv.sendSimpleEmail("crankyash@gmail.com", "Test mail", "testing");
-		
 		return "Home";
 	}
 	
 	@GetMapping("login")
-	public String  loginPage()
-	{
+	public String  loginPage(){
 		return "Login";
 	}
 	
@@ -98,15 +93,13 @@ public class MainController {
 	}
 	
 	@GetMapping("/confotppass")
-	public String confOTPForgotPassword(@ModelAttribute("Users") Users users,Model model,HttpSession sess)
-	{
+	public String confOTPForgotPassword(@ModelAttribute("Users") Users users,Model model,HttpSession sess){
 		model.addAttribute("vemail", sess.getAttribute("vemail"));
 		return "ConfirmOtpForgotPass";
 	}
 	
 	@PostMapping("/confotppassword")
-	public String confirmOtpPassword(@ModelAttribute("Users") Users users, HttpSession sess,RedirectAttributes attr)
-	{
+	public String confirmOtpPassword(@ModelAttribute("Users") Users users, HttpSession sess,RedirectAttributes attr){
 		Integer n_otp = Integer.parseInt(users.getCnf_otp());
 		int  new_otp = n_otp;
 		Integer o_otp = (Integer) sess.getAttribute("otp");;
@@ -134,19 +127,15 @@ public class MainController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String enpass = passcode.encode(users.getCnf_pass());
 		Long uid =0L;
-		if(sess.getAttribute("userid")!=null)
-		{
+		if(sess.getAttribute("userid")!=null){
 			uid = (Long) sess.getAttribute("userid");
 		}
 		else {
 			Users user = userserv.getUserByUserName(auth.getName());
 			uid = user.getUser_id();
 		}	
-		
 		int res = userserv.updateUsersPassword(enpass, uid);
-		
-		if(res>0)
-		{
+		if(res>0){
 			if(auth.getName().equals("admin")) {
 				sess.removeAttribute("vemail");
 				sess.removeAttribute("userid");

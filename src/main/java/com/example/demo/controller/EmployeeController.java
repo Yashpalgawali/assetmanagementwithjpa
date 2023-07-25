@@ -92,22 +92,17 @@ public class EmployeeController {
 		
 		AssignedAssets isassigned = null;
 		Employee emp = empserv.saveEmployee(empl);
-		if(emp!=null)
-		{
+		if(emp!=null){
 			String[] asset_arr = asset_ids.split(",");
 			
-			for(int i=0;i<asset_arr.length;i++)
-			{
+			for(int i=0;i<asset_arr.length;i++){
 				AssignedAssets assignasset = new AssignedAssets();
 				int qty =0;
-				
 				Long astid = Long.valueOf(asset_arr[i]);
-				
 				Assets ast = new Assets();
 				Assets getasset = assetserv.getAssetsById(""+astid);
 				
 				AssetType atype = new AssetType();
-				
 				atype = atypeserv.getAssetTypeById(""+getasset.getAtype().getType_id());
 				
 				ast.setAtype(atype);
@@ -161,8 +156,7 @@ public class EmployeeController {
 		List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
 		List<Object[]>  aslist = assignserv.getAllAssignedassetsGroup();
 		
-		if(aslist.size() >0)
-		{
+		if(aslist.size() >0){
 			aslist.forEach(ast->{
 					AssignedAssets asts = new AssignedAssets();
 					
@@ -243,11 +237,9 @@ public class EmployeeController {
 	{
 		List<AssignedAssets> assign = assignserv.getAssignedAssetsByEmpId(id);
 		Employee empl = null;
-		if(assign.size()>0)
-		{	
+		if(assign.size()>0){	
 			Long[] strArray = new Long[assign.size()];
-			for(int i=0;i<assign.size();i++)
-			{
+			for(int i=0;i<assign.size();i++){
 				empl = assign.get(i).getEmployee();
 				strArray[i] = assign.get(i).getAsset().getAsset_id();
 			}
@@ -282,9 +274,7 @@ public class EmployeeController {
 	public String viewEmployeeHistoryByEmpId(@PathVariable("id") String id,Model model, RedirectAttributes attr)
 	{
 		List<AssetAssignHistory> ahist = ahistserv.getAssetAssignHistoryByEmpId(id);
-		
-		if(ahist.size()>0)
-		{	
+		if(ahist.size()>0){	
 			model.addAttribute("ahist", ahist);
 			model.addAttribute("emp", empserv.getEmployeeById(id));
 			return "ViewEmployeeHistory";
@@ -301,13 +291,9 @@ public class EmployeeController {
 		Employee emp = empserv.getEmployeeById(empid);
 		if(emp!=null) {
 			List<AssignedAssets> aslist =  assignserv.getAssignedAssetsByEmpId(Long.valueOf(empid));
-			
 			String assigned_assets = "",assigned_asset_type="";
-			
 			Long[] strArray = new Long[aslist.size()];
-			
-			for(int i=0;i<aslist.size();i++)
-			{
+			for(int i=0;i<aslist.size();i++){
 				if(i==0){
 					assigned_assets = assigned_assets+aslist.get(i).getAsset().getAsset_name()+"("+aslist.get(i).getAsset().getModel_number()+")";
 					assigned_asset_type =assigned_asset_type+aslist.get(i).getAsset().getAtype().getType_name();
@@ -319,7 +305,6 @@ public class EmployeeController {
 					strArray[i] =aslist.get(i).getAsset().getAsset_id(); 
 				}
 			}
-			
 			model.addAttribute("clist", compserv.getAllCompanies());
 			model.addAttribute("desiglist", desigserv.getAllDesignations());
 			model.addAttribute("aslist", assetserv.getAllAssets());

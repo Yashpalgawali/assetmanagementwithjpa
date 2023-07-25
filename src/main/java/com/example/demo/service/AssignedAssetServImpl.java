@@ -17,12 +17,10 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 	
 	@Autowired
 	AssetRepo assetrepo;
-	
 
 	@Override
 	public AssignedAssets saveAssignedAssets(AssignedAssets assign) {
 		// TODO Auto-generated method stub
-		
 		return assignassetrepo.save(assign);
 	}
 
@@ -53,10 +51,8 @@ public class AssignedAssetServImpl implements AssignedAssetService {
 		{
 			Long asid = Long.valueOf(strarr[i]);
 			res  = assignassetrepo.deleteAssignedAssetByEmpidAssetId(asid, assign.getEmp_id());
-			 
 			int asset_qty = assetrepo.getQuantiyByAssetId(asid);
 			asset_qty +=1;
-			
 			assetrepo.updateAssetQuantityByAssetId(asid, ""+asset_qty);
 		}
 		
