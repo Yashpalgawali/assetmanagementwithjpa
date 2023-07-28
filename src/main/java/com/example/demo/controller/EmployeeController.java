@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringJoiner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -17,14 +16,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.exporttoexcel.ExportAssetAssignHistory;
@@ -100,7 +96,7 @@ public class EmployeeController {
 				int qty =0;
 				Long astid = Long.valueOf(asset_arr[i]);
 				Assets ast = new Assets();
-				Assets getasset = assetserv.getAssetsById(""+astid);
+				Assets getasset = assetserv.getAssetsById(astid);
 				
 				AssetType atype = new AssetType();
 				atype = atypeserv.getAssetTypeById(""+getasset.getAtype().getType_id());
@@ -121,12 +117,10 @@ public class EmployeeController {
 				
 				isassigned = assignserv.saveAssignedAssets(assignasset);
 				
-				if(isassigned!=null)
-				{	
+				if(isassigned!=null){	
 					qty = (Integer)assetserv.getAssetQuantityByAssetId(astid);
 					qty-=1;
 					assetserv.updateAssetQuantityByAssetId(astid, ""+qty);
-					
 					AssetAssignHistory ahist = new AssetAssignHistory();
 				
 					ahist.setAsset(ast);
@@ -249,8 +243,7 @@ public class EmployeeController {
 			model.addAttribute("assignedlist", strArray);
 			return "RetrieveAssets";
 		}
-		else
-		{
+		else{
 			attr.addFlashAttribute("reserr", "No Assets are assigned ");
 			return "redirect:/viewallemployees";
 		}
@@ -349,8 +342,7 @@ public class EmployeeController {
 	        List<AssignedAssets> alist = new ArrayList<AssignedAssets>();
 			List<Object[]>  aslist = assignserv.getAllAssignedassetsGroup();
 			
-			if(aslist.size() >0)
-			{
+			if(aslist.size() >0){
 				aslist.forEach(ast->{
 						AssignedAssets asts = new AssignedAssets();
 						
@@ -410,11 +402,8 @@ public class EmployeeController {
 				});
 			}
 	        ExportAssignedAssets excelExporter = new ExportAssignedAssets(alist);
-	         
 	        excelExporter.export(response);    
 	    } 
-		
-		
 		
 		@RequestMapping("/exportassignshistory/excel/{id}")
 	    public void exportToExcel(HttpServletResponse response,@PathVariable("id")Long empid ) throws IOException {

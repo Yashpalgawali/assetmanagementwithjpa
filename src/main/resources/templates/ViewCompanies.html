@@ -22,13 +22,7 @@
 		
 	<div class="container">
 		<!-- start: PAGE HEADER -->
-		<div th:if="${response}">
-			<h6 class="alert alert-success" th:text="${response}"></h6>
-		</div>
 		
-		<div th:if="${reserr}">
-			<h6 class="alert alert-danger" th:text="${reserr}"></h6>
-		</div>
 		<div class="row">
 			<div class="col-sm-12">
 				
@@ -45,6 +39,8 @@
 				</ol>
 			</div>
 		</div>
+		<div th:if="${response}"><h6 class="alert alert-success" th:text="${response}"></h6></div>
+		<div th:if="${reserr}"><h6 class="alert alert-danger" th:text="${reserr}"></h6></div>
 		<div class="card-header">
 			<h4>View Companies
 				<a th:href="@{addcompany}" class="btn btn-primary" style="float:right;">Add Company</a>

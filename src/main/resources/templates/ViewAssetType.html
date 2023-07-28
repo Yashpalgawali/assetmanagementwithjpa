@@ -17,8 +17,7 @@
 <body>
 	<div th:include="fragments/header.html :: header"></div>	
 	<div class="container">
-	<div th:if="${response}"><h6 class="alert alert-success" th:text="${response}"></h6></div>
-	<div th:if="${reserr}"><h6 class="alert alert-danger" th:text="${reserr}"></h6></div>
+
 		<!-- start: PAGE HEADER -->
 		<div class="row">
 			<div class="col-sm-12">
@@ -31,6 +30,8 @@
 				</ol>
 			</div>
 		</div>
+	<div th:if="${response}"><h6 class="alert alert-success" th:text="${response}"></h6></div>
+	<div th:if="${reserr}"><h6 class="alert alert-danger" th:text="${reserr}"></h6></div>
 		<div class="card-header">
 			<h4>Asset Type List<a th:href="@{/addassettype}" style="float:right;" class="btn btn-primary mb-3">Add Asset Type</a></h4>
 		</div>

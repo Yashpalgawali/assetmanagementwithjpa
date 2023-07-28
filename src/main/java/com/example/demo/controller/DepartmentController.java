@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,18 +88,14 @@ public class DepartmentController {
 	}
 	
 	@GetMapping("/viewdepartments")
-	public String viewAllDepartments(Model model)
-	{
-		List<Department> dlist = deptserv.getAllDepartments();
-		
-		model.addAttribute("dlist", dlist);
+	public String viewAllDepartments(Model model){
+		model.addAttribute("dlist", deptserv.getAllDepartments());
 		return "ViewDepartments";
 	}
 	
 	
 	@RequestMapping("/getdeptbycompid/{id}")@ResponseBody
-	public List<Department> getDepartmentByCompanyId(@PathVariable("id")String id)
-	{
+	public List<Department> getDepartmentByCompanyId(@PathVariable("id")String id){
 		return deptserv.getDepartmentByCompanyId(id);
 	}
 	

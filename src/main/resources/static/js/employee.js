@@ -8,12 +8,11 @@
 		let appname = $('#appname').val();
 		
 		$.ajax({
-//				url		:	'/getdeptbycompid/'+cid,
-				url		:	'/'+appname+'/getdeptbycompid/'+cid,
+				url		:	'/getdeptbycompid/'+cid,
+//				url		:	'/'+appname+'/getdeptbycompid/'+cid,
 				type	:	'GET',
 				dataType:	'JSON',
-				success : 	function(result)
-				{
+				success : 	function(result){
 					$.each(result,function(i){
 						$('#department').append("<option value='"+result[i].dept_id+"'>"+result[i].dept_name+"</option>");	
 					});
@@ -22,7 +21,6 @@
 	}
 	
 	$(document).ready(function() {
-
 		$("#company").select2({
 			theme : 'classic',
 			width : 'resolve'

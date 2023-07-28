@@ -100,31 +100,27 @@ public class AssetController {
 	@RequestMapping("/saveasset")
 	public String saveAssets(@ModelAttribute("Assets")Assets asset,RedirectAttributes attr)
 	{
-		
 		Assets ast = assetserv.saveAssets(asset);
-		if(ast!=null)
-		{
-			attr.addFlashAttribute("response", "Asset Type is saved successfully");
+		if(ast!=null){
+			attr.addFlashAttribute("response", "Asset "+ast.getAsset_name()+" is saved successfully");
 			return "redirect:/viewassets";
 		}
 		else {
-			attr.addFlashAttribute("reserr", "Asset Type is not saved ");
+			attr.addFlashAttribute("reserr", "Asset is not saved ");
 			return "redirect:/viewassets";
 		}
 	}
 	
 	@GetMapping("/viewassets")
-	public String viewAssets(Model model)
-	{
+	public String viewAssets(Model model){
 		List<Assets> asset = assetserv.getAllAssets();
-		
 		model.addAttribute("aslist", asset);		
 		return "ViewAssets";
 	}
 	
 	
 	@GetMapping("/editasset/{id}")
-	public String editAssetByIs(@PathVariable("id") String id,Model model, RedirectAttributes attr)
+	public String editAssetByIs(@PathVariable("id") Long id,Model model, RedirectAttributes attr)
 	{
 		Assets asset = assetserv.getAssetsById(id);
 		if(asset!=null){

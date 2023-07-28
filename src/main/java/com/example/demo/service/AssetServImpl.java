@@ -27,32 +27,31 @@ public class AssetServImpl implements AssetService {
 	}
 
 	@Override
-	public Assets getAssetsById(String id) { 
+	public Assets getAssetsById(Long id) { 
 		// TODO Auto-generated method stub
-		Long aid =Long.valueOf(id);
-		return assetrepo.findById(aid).get();
+		try {
+			return assetrepo.findById(id).get();
+		}
+		catch(Exception e) {
+			return null;
+		}
 	}
 
 	@Override
 	public int updateAssets(Assets asset) {
 		// TODO Auto-generated method stub
-		
 		return assetrepo.updateAsset(asset.getAsset_name(), asset.getAtype().getType_id(), asset.getAsset_number(), asset.getModel_number(), asset.getQuantity() , asset.getAsset_id());
 	}
 
 	@Override
 	public int updateAssetQuantityByAssetId(Long asid,String qty) {
 		// TODO Auto-generated method stub
-		
-		System.err.println("inside updateAssetQuantityByAssetId Service layer ---->>>\nAsset ID is ->> "+asid+"\nQuantity ->> "+qty+"\n");
-		
 		return assetrepo.updateAssetQuantityByAssetId(asid, qty);
 	}
 
 	@Override
 	public int getAssetQuantityByAssetId(Long asid) {
 		// TODO Auto-generated method stub
-		
 		return assetrepo.getQuantiyByAssetId(asid);
 	}
 

@@ -20,12 +20,8 @@
 			<div class="col-sm-12">
 				<!-- start: PAGE TITLE & BREADCRUMB -->
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a th:href="@{/}"> 
-						<i class="fa fa-home"></i>&nbsp;Home </a>
-					</li>
-					<li class="breadcrumb-item active" aria-current="page">
-						Edit Department
-					</li>
+					<li class="breadcrumb-item"><a th:href="@{/}"><i class="fa fa-home"></i>&nbsp;Home </a></li>
+					<li class="breadcrumb-item active" aria-current="page">Edit Department</li>
 				</ol>
 			</div>
 		</div>
@@ -52,7 +48,8 @@
 					  <label for="dept_name">Department Name</label>
 						<input class="form-control mb-3" type="text" id="dept_name" name="dept_name" th:value="${dept.dept_name}" placeholder="Enter Department Name" required/>
 					</div>
-						<input type="submit" class="btn btn-primary" value="Submit"/><input type="reset" class="btn btn-primary" value="RESET"/>
+						<input type="submit" class="btn btn-primary" value="Submit"/>
+						<input type="reset" class="btn btn-primary" value="RESET"/>
 				 </form>
 			</div>	
 		</div>

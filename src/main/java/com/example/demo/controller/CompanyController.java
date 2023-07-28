@@ -22,17 +22,14 @@ public class CompanyController {
 	CompanyService compserv;
 	
 	@GetMapping("/addcompany")
-	public String addCompany()
-	{
+	public String addCompany(){
 		return "AddCompany";
 	}
 
 	@RequestMapping("/savecompany")
-	public String saveCompany(@ModelAttribute("Company") Company company,RedirectAttributes attr)
-	{
+	public String saveCompany(@ModelAttribute("Company") Company company,RedirectAttributes attr){
 		Company comp = compserv.saveCompany(company);
-		if(comp!=null)
-		{
+		if(comp!=null){
 			attr.addFlashAttribute("response", "Company is saved successfully");
 			return "redirect:/viewcompanies";
 		}
@@ -46,15 +43,15 @@ public class CompanyController {
 	@Cacheable(value = "viewcompanies")
 	public String viewCompany(Model model)
 	{
-			List<Company> clist = compserv.getAllCompanies();
-			model.addAttribute("clist", clist);
-			return "ViewCompanies";
-		
+		List<Company> clist = compserv.getAllCompanies();
+		model.addAttribute("clist", clist);
+		return "ViewCompanies";
 	}
+	
 	@GetMapping("/editcompany/{id}")
 	public String editCompany(@PathVariable("id") Long cid,Model model , RedirectAttributes attr)
 	{
-		Company comp = compserv.getCompanyById(""+cid);
+		Company comp = compserv.getCompanyById(cid);
 		model.addAttribute("comp", comp);
 		return "EditCompany";
 	}
@@ -63,8 +60,7 @@ public class CompanyController {
 	public String updateCompany(@ModelAttribute("Company")Company comp,RedirectAttributes attr)
 	{
 		int res = compserv.updateCompany(comp);
-		if(res > 0)
-		{
+		if(res > 0){
 			attr.addFlashAttribute("response", "Company updated successfully");
 			return "redirect:/viewcompanies";
 		}
@@ -72,8 +68,6 @@ public class CompanyController {
 			attr.addFlashAttribute("reserr", "Company is not updated ");
 			return "redirect:/viewcompanies";
 		}
-		
 	}
-
 
 }

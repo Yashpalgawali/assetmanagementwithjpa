@@ -10,7 +10,7 @@ public interface CompanyService {
 	
 	public List<Company> getAllCompanies();
 	
-	public Company getCompanyById(String id);
+	public Company getCompanyById(Long id);
 	
 	public int updateCompany(Company comp);
 	
