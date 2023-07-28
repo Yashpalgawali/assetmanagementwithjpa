@@ -8,8 +8,8 @@
 		let appname = $('#appname').val();
 		
 		$.ajax({
-				url		:	'/getdeptbycompid/'+cid,
-//				url		:	'/'+appname+'/getdeptbycompid/'+cid,
+//				url		:	'/getdeptbycompid/'+cid,
+				url		:	'/'+appname+'/getdeptbycompid/'+cid,
 				type	:	'GET',
 				dataType:	'JSON',
 				success : 	function(result){
