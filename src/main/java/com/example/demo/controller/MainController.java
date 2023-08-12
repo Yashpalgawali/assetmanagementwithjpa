@@ -53,6 +53,9 @@ public class MainController {
 				.toUriString();
 		sess.setAttribute("base_url", base_url);
 		sess.setAttribute("appname", env.getProperty("spring.application.name"));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String logged_username = auth.getName();
+		sess.setAttribute("logged_username", logged_username);
 		return "Home";
 	}
 	
