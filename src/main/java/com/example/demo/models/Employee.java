@@ -48,5 +48,7 @@ public class Employee {
 	@Transient
 	private String comments;
 	
+	@Transient
+	private String appname;
 	
 }
